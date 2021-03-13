@@ -7,7 +7,6 @@
 
     <ItemGroup>
       <Folder Include="Graphs\D" />
-      <Folder Include="Graphs\S" />
     </ItemGroup>
 
 </Project>
