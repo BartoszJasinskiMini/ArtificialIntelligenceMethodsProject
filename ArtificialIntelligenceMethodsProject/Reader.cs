@@ -21,7 +21,8 @@ namespace ArtificialIntelligenceMethodsProject
         }
         private static Problem Parse(string filepath)
         {
-            string[] lines = System.IO.File.ReadAllLines(filepath);
+            /// PROBLEM PARSING ///
+            string[] lines = System.IO.File.ReadAllLines(filepath + ".vrp");
             int index = 0;
             string name = lines[index].Substring(lines[index].LastIndexOf(' ')).Trim();
             index++;
@@ -29,19 +30,41 @@ namespace ArtificialIntelligenceMethodsProject
             index++;
             string type = lines[index].Substring(lines[index].LastIndexOf(' ')).Trim();
             index++;
-            int neightboursCount = int.Parse(lines[index].Substring(lines[index].LastIndexOf(' ')));
+            int nodesCount = int.Parse(lines[index].Substring(lines[index].LastIndexOf(' ')));
             index += 2;
             int capacity = int.Parse(lines[index].Substring(lines[index].LastIndexOf(' ')));
             index += 2;
-            Graph graph = new Graph();
-            for(int i = 0; i < neightboursCount; i++)
+            int demandIndex = index + nodesCount + 1;
+            Graph graph = new Graph(int.Parse(lines[demandIndex + nodesCount + 1]));
+            for (int i = 0; i < nodesCount; i++)
             {
-                string[] tokens = lines[index + i].Split(' ');
-                int demandIndex = index + i + neightboursCount + 1;
-                int demand = int.Parse(lines[demandIndex].Substring(lines[demandIndex].IndexOf(' ')));
-                graph.AddSupplyPoint(new Vertice(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), demand));
+                graph.AddVertice(GetVertice(lines[index + i], lines[demandIndex + i]));
             }
-            return new Problem(name, comment, type, neightboursCount, capacity, graph);
+            /// SOLUTION PARSING ///
+            List<int[]> routes = new List<int[]>();
+            lines = System.IO.File.ReadAllLines(filepath + ".sol");
+            int j = 0;
+            while(lines[j].Contains("Route"))
+            {
+                string[] tokens = lines[j].Substring(lines[j].IndexOf(':') + 1).TrimStart().TrimEnd().Split(' ');
+                int[] route = new int[tokens.Length];
+                for(int i = 0; i < tokens.Length; i++)
+                {
+                    route[i] = int.Parse(tokens[i]);
+                }
+                routes.Add(route);
+                j++;
+            }
+            int cost = int.Parse(lines[j].Split(' ')[1]);
+            Solution solution = new Solution(cost, routes);
+
+            return new Problem(name, comment, type, nodesCount, capacity, graph, solution);
+        }
+        private static Vertice GetVertice(string verticePosition, string verticeDemand)
+        {
+            string[] tokens = verticePosition.Split(' ');
+            int demand = int.Parse(verticeDemand.Substring(verticeDemand.IndexOf(' ')));
+            return new Vertice(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), demand);
         }
     }
 }

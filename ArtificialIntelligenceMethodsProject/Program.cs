@@ -7,7 +7,7 @@ namespace ArtificialIntelligenceMethodsProject
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Reader.ReadProblem(DataSet.S, "A-n53-k7.vrp").ToString());
+            Console.WriteLine(Reader.ReadProblem(DataSet.S, "A-n53-k7").ToString());
         }
     }
 }

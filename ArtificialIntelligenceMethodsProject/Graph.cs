@@ -6,15 +6,16 @@ namespace ArtificialIntelligenceMethodsProject
 {
     class Graph
     {
-        public List<Vertice> SupplyPoints { get; private set; }
-        public Vertice Depot { get; private set; }
-        public Graph()
+        public List<Vertice> Vertices { get; }
+        public int DepotIndex { get; }
+        public Graph(int depotIndex)
         {
-            SupplyPoints = new List<Vertice>();
+            DepotIndex = depotIndex;
+            Vertices = new List<Vertice>();
         }
-        public void AddSupplyPoint(Vertice vertice)
+        public void AddVertice(Vertice vertice)
         {
-            SupplyPoints.Add(vertice);
+            Vertices.Add(vertice);
         }
     }
 }
