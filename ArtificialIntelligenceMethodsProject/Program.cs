@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace ArtificialIntelligenceMethodsProject
 {
@@ -6,7 +7,7 @@ namespace ArtificialIntelligenceMethodsProject
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine(Reader.ReadProblem(DataSet.S, "A-n53-k7.vrp").ToString());
         }
     }
 }

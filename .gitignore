@@ -3,3 +3,8 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+/.vs/ProjectSettings.json
+/.vs/ArtificialIntelligenceMethodsProject/v16/.suo
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
+/.vs/ArtificialIntelligenceMethodsProject/DesignTimeBuild/.dtbcache.v2
