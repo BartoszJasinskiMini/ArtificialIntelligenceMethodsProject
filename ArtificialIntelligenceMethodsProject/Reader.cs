@@ -25,6 +25,7 @@ namespace ArtificialIntelligenceMethodsProject
             string[] lines = System.IO.File.ReadAllLines(filepath + ".vrp");
             int index = 0;
             string name = lines[index].Substring(lines[index].LastIndexOf(' ')).Trim();
+            int vehiclesCount = int.Parse(name.Substring(name.LastIndexOf('k') + 1));
             index++;
             string comment = lines[index].Substring(lines[index].LastIndexOf('(')).TrimEnd(')').TrimStart('(');
             index++;
@@ -58,7 +59,7 @@ namespace ArtificialIntelligenceMethodsProject
             int cost = int.Parse(lines[j].Split(' ')[1]);
             Solution solution = new Solution(cost, routes);
 
-            return new Problem(name, comment, type, nodesCount, capacity, graph, solution);
+            return new Problem(name, comment, type, nodesCount, vehiclesCount, capacity, graph, solution);
         }
         private static Vertice GetVertice(string verticePosition, string verticeDemand)
         {

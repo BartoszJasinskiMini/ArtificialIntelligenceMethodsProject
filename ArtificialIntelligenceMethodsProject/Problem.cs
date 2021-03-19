@@ -11,14 +11,15 @@ namespace ArtificialIntelligenceMethodsProject
         public string Type { get;  }
         public int NodesCount { get;  }
         public int Capacity { get; }
+        public int VehiclesCount { get; }
         public Graph Graph { get; }
         public Solution Solution { get; }
-        public Problem(string name, string comment, string type, int neighboursCount, int capacity, Graph graph, Solution solution)
+        public Problem(string name, string comment, string type, int nodesCount, int vehiclesCount , int capacity, Graph graph, Solution solution)
         {
             Name = name;
             Comment = comment;
             Type = type;
-            NodesCount = neighboursCount;
+            NodesCount = nodesCount;
             Capacity = capacity;
             Graph = graph;
             Solution = solution;
