@@ -1,12 +1,14 @@
 ﻿using System;
+using ArtificialIntelligenceMethodsProject.CLI;
+using CommandDotNet;
 
 namespace ArtificialIntelligenceMethodsProject
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            return new AppRunner<Cli>().Run(args);
         }
     }
 }
