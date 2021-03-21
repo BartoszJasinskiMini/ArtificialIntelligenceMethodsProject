@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ArtificialIntelligenceMethodsProject.CLI;
 using CommandDotNet;
 
@@ -8,6 +9,7 @@ namespace ArtificialIntelligenceMethodsProject
     {
         static int Main(string[] args)
         {
+            Console.WriteLine(Reader.ReadProblem(DataSet.S, "A-n53-k7").ToString());
             return new AppRunner<Cli>().Run(args);
         }
     }
