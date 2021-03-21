@@ -7,7 +7,9 @@ namespace ArtificialIntelligenceMethodsProject
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Reader.ReadProblem(DataSet.S, "A-n53-k7").ToString());
+            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
+            greedyAlgorithm.LoadProblemInstance(Reader.ReadProblem(DataSet.S, "A-n53-k7"));
+            greedyAlgorithm.Solve();
         }
     }
 }

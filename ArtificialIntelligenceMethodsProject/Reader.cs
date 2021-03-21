@@ -10,8 +10,13 @@ namespace ArtificialIntelligenceMethodsProject
     {
         public static Problem ReadProblem(DataSet dataset, string filename)
         {
+            string envSlashSetting = "\\";
+            if(Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                envSlashSetting = "/";
+            }
             string directory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Graphs";
-            string filepath = directory + "\\" + dataset.ToString() + "\\" + filename;
+            string filepath = directory + envSlashSetting + dataset.ToString() + envSlashSetting + filename;
             return Parse(filepath);
 
         }
