@@ -1,15 +1,17 @@
 ﻿using System;
 using System.IO;
+using ArtificialIntelligenceMethodsProject.CLI;
+using CommandDotNet;
 
 namespace ArtificialIntelligenceMethodsProject
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
-            greedyAlgorithm.LoadProblemInstance(Reader.ReadProblem(DataSet.S, "A-n53-k7"));
-            greedyAlgorithm.Solve();
+            Console.WriteLine(Reader.ReadProblem(DataSet.S, "A-n53-k7").ToString());
+            return 0;
+            // return new AppRunner<Cli>().Run(args);
         }
     }
 }
