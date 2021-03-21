@@ -1,24 +1,33 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
+using ArtificialIntelligenceMethodsProject.Models;
 
-namespace ArtificialIntelligenceMethodsProject
+namespace ArtificialIntelligenceMethodsProject.IO
 {
     enum DataSet { D = 68, M = 77, S = 83}
-    class Reader
+
+    static class Reader
     {
         public static Problem ReadProblem(DataSet dataset, string filename)
         {
-            string envSlashSetting = "\\";
+            var envSlashSetting = "\\";
             if(Environment.OSVersion.Platform == PlatformID.Unix)
             {
                 envSlashSetting = "/";
             }
-            string directory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Graphs";
-            string filepath = directory + envSlashSetting + dataset.ToString() + envSlashSetting + filename;
-            return Parse(filepath);
 
+            var directoryInfo = Directory.GetParent(Directory.GetCurrentDirectory()).Parent;
+            if (directoryInfo != null)
+            {
+                var directory = directoryInfo.Parent?.FullName + envSlashSetting + "Graphs";
+                var filepath = directory + envSlashSetting + dataset + envSlashSetting + filename;
+                return Parse(filepath);
+            }
+            else
+            {
+                throw new FileNotFoundException();
+            }
         }
         public static Problem ReadProblem(string filepath)
         {
