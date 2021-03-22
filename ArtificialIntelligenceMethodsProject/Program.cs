@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using ArtificialIntelligenceMethodsProject.Algorithms;
 using ArtificialIntelligenceMethodsProject.CLI;
 using ArtificialIntelligenceMethodsProject.IO;
+using ArtificialIntelligenceMethodsProject.Models;
 using CommandDotNet;
 
 namespace ArtificialIntelligenceMethodsProject
@@ -10,7 +12,10 @@ namespace ArtificialIntelligenceMethodsProject
     {
         static int Main(string[] args)
         {
-            Console.WriteLine(Reader.ReadProblem(DataSet.S, "A-n53-k7").ToString());
+            Problem problem = Reader.ReadProblem(DataSet.S, "A-n53-k7");
+            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
+            greedyAlgorithm.LoadProblemInstance(problem);
+            Console.WriteLine(greedyAlgorithm.Solve().ToString());
             return 0;
             // return new AppRunner<Cli>().Run(args);
         }
