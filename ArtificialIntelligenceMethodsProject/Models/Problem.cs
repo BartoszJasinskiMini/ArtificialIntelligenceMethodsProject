@@ -1,6 +1,6 @@
 ﻿namespace ArtificialIntelligenceMethodsProject.Models
 {
-    class Problem
+    public class Problem
     {
         public string Name { get; }
         public string Comment { get; }

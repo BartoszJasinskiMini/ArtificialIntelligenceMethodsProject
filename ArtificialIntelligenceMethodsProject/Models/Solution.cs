@@ -2,7 +2,7 @@
 
 namespace ArtificialIntelligenceMethodsProject.Models
 {
-    class Solution
+    public class Solution
     {
         public List<int[]> Routes { get; }
         public int Cost { get; }

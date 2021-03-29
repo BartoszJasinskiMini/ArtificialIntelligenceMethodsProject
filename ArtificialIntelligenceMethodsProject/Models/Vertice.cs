@@ -2,7 +2,7 @@
 
 namespace ArtificialIntelligenceMethodsProject.Models
 {
-    class Vertice
+    public class Vertice
     {
         public Vertice(int number, int x, int y, int demand)
         {

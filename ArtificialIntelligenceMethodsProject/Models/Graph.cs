@@ -2,7 +2,7 @@
 
 namespace ArtificialIntelligenceMethodsProject.Models
 {
-    class Graph
+    public class Graph
     {
         public List<Vertice> Vertices { get; }
         public int DepotIndex { get; }

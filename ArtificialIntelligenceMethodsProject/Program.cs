@@ -12,10 +12,7 @@ namespace ArtificialIntelligenceMethodsProject
     {
         static int Main(string[] args)
         {
-            Problem problem = Reader.ReadProblem(DataSet.S, "A-n53-k7");
-            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
-            greedyAlgorithm.LoadProblemInstance(problem);
-            Console.WriteLine(greedyAlgorithm.Solve().ToString());
+           
             return 0;
             // return new AppRunner<Cli>().Run(args);
         }

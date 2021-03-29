@@ -5,9 +5,9 @@ using ArtificialIntelligenceMethodsProject.Models;
 
 namespace ArtificialIntelligenceMethodsProject.IO
 {
-    enum DataSet { D = 68, M = 77, S = 83}
+    public enum DataSet { D = 68, M = 77, S = 83}
 
-    static class Reader
+    public static class Reader
     {
         public static Problem ReadProblem(DataSet dataset, string filename)
         {

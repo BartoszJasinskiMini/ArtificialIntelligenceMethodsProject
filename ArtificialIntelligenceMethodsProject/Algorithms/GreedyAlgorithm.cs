@@ -5,33 +5,33 @@ using System.Diagnostics;
 
 namespace ArtificialIntelligenceMethodsProject.Algorithms
 {
-    class GreedyAlgorithm : IAlgorithm
+    public class GreedyAlgorithm : IAlgorithm
     {
         private Problem problem;
-        private Solution solution;
+        private double cost;
         private List<int[]> routes;
         public GreedyAlgorithm()
         {
 
         }
-
         public Solution GetSolution()
         {
-            if (routes != null)
-                return new Solution(0, routes);
+            if (routes != null && problem != null && routes.Count <= problem.VehiclesCount)
+                return new Solution((int) cost, routes);
             return null;
         }
-
         public void LoadProblemInstance(Problem problem)
         {
             this.problem = problem;
+            routes = null;
+            cost = double.MaxValue;
         }
-
         public TimeSpan Solve()
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             routes = new List<int[]>();
+            cost = 0;
             List<Vertice> notVisited = new List<Vertice>();
             for (int i = 1; i < problem.NodesCount; i++)
             {
@@ -44,24 +44,22 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                 int capacity = problem.Capacity;
                 while (capacity > 0 && notVisited.Count > 0)
                 {
-                    int closestNodeIndex = FindClosestNodeIndex(notVisited, currentNode, capacity);
+                    (int closestNodeIndex, double closestNodeCost) = FindClosestNodeIndex(notVisited, currentNode, capacity);
                     if (closestNodeIndex == -1)
                         break;
+                    cost += closestNodeCost;
                     capacity -= notVisited[closestNodeIndex].Demand;
-                    if (capacity >= 0)
-                    {
-                        route.Add(notVisited[closestNodeIndex].Number);
-                        currentNode = notVisited[closestNodeIndex];
-                        notVisited.RemoveAt(closestNodeIndex);
-                    }
+                    route.Add(notVisited[closestNodeIndex].Number);
+                    currentNode = notVisited[closestNodeIndex];
+                    notVisited.RemoveAt(closestNodeIndex);
                 }
+                cost += Vertice.GetDistance(currentNode, problem.Graph.Vertices[problem.Graph.DepotIndex]);
                 routes.Add(route.ToArray());
             }
             stopwatch.Stop();
             return stopwatch.Elapsed;
         }
-
-        private int FindClosestNodeIndex(List<Vertice> node, Vertice from, int capacityLeft)
+        private (int index, double cost) FindClosestNodeIndex(List<Vertice> node, Vertice from, int capacityLeft)
         {
             int closestIndex = -1;
             double closestValue = double.MaxValue;
@@ -77,9 +75,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                     }
                 }
             }
-            return closestIndex;
+            return (closestIndex, closestValue);
         }
-
-
     }
 }
