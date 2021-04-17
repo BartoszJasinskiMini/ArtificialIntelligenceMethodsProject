@@ -13,7 +13,12 @@ namespace ArtificialIntelligenceMethodsProject
     {
         static int Main(string[] args)
         {
-           Console.WriteLine("HELLO");
+            Problem problem = Reader.ReadProblem(DataSet.M, "A-n32-k5");
+            ACO greedyAlgorithm = new ACO();
+            greedyAlgorithm.LoadProblemInstance(problem);
+            greedyAlgorithm.Solve();
+            // Solution solution = greedyAlgorithm.GetSolution();
+            
             return 0;
             // return new AppRunner<Cli>().Run(args);
         }

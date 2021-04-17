@@ -7,14 +7,14 @@ namespace ArtificialIntelligenceMethodsProject.Models
     public class Graph2
     {
           public List<Point> Points { get; set; }
-        public Dictionary<int, Edge> Edges { get; set; }
+        public Dictionary<int, Edge2> Edges { get; set; }
         public int Dimensions { get; set; }
         public double MinimumPheromone { get; set; }
         private bool IsSymetric { get; set; }
 
         public Graph2(List<Point> Points, bool isSymetric)
         {
-            Edges = new Dictionary<int, Edge>();
+            Edges = new Dictionary<int, Edge2>();
             this.Points = Points;
             Dimensions = Points.Count;
             IsSymetric = isSymetric;
@@ -33,8 +33,8 @@ namespace ArtificialIntelligenceMethodsProject.Models
                 {
                     if (i != j)
                     {
-                        Edge edge = new Edge(Points[i], Points[j]);
-                        Edges.Add(Helper.HashFunction(Points[i].Id, Points[j].Id), edge);
+                        Edge2 edge2 = new Edge2(Points[i], Points[j]);
+                        Edges.Add(Helper.HashFunction(Points[i].Id, Points[j].Id), edge2);
                     }
                 }
             }
@@ -43,7 +43,7 @@ namespace ArtificialIntelligenceMethodsProject.Models
         /// <summary>
         /// Return edge beetwen two points (their ID's) from Dictionary
         /// </summary>
-        public Edge GetEdge(int firstPointId, int secondPointId)
+        public Edge2 GetEdge(int firstPointId, int secondPointId)
         {
             return Edges[Helper.HashFunction(firstPointId, secondPointId)];
         }
@@ -59,24 +59,24 @@ namespace ArtificialIntelligenceMethodsProject.Models
             }
         }
 
-        public void EvaporatePheromone(Edge edge, double value)
+        public void EvaporatePheromone(Edge2 edge2, double value)
         {
-            edge.Pheromone = Math.Max(MinimumPheromone, edge.Pheromone * value); // Math.Max is here to prevent Pheromon = 0
+            edge2.Pheromone = Math.Max(MinimumPheromone, edge2.Pheromone * value); // Math.Max is here to prevent Pheromon = 0
 
             if (IsSymetric)
             {
-                var secondEdge = GetEdge(edge.End.Id, edge.Start.Id);
+                var secondEdge = GetEdge(edge2.End.Id, edge2.Start.Id);
                 secondEdge.Pheromone = Math.Max(MinimumPheromone, secondEdge.Pheromone * value);
             }
         }
 
-        public void DepositPheromone(Edge edge, double value)
+        public void DepositPheromone(Edge2 edge2, double value)
         {
-            edge.Pheromone += value;
+            edge2.Pheromone += value;
 
             if (IsSymetric)
             {
-                var secondEdge = GetEdge(edge.End.Id, edge.Start.Id);
+                var secondEdge = GetEdge(edge2.End.Id, edge2.Start.Id);
                 secondEdge.Pheromone += value;
             }
         }

@@ -73,8 +73,8 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
             {
                 foreach (AntSystem ant in antColony)
                 {
-                    Edge edge = ant.Move();
-                    LocalUpdate(edge);
+                    Edge2 edge2 = ant.Move();
+                    LocalUpdate(edge2);
                 }
             }
 
@@ -86,13 +86,13 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         /// <summary>
         /// Update pheromone level on edge passed in parameter
         /// </summary>
-        public void LocalUpdate(Edge edge)
+        public void LocalUpdate(Edge2 edge2)
         {
             double evaporate = (1 - Parameters.LocalEvaporationRate);
-            Graph2.EvaporatePheromone(edge, evaporate);
+            Graph2.EvaporatePheromone(edge2, evaporate);
 
             double deposit = Parameters.LocalEvaporationRate * Parameters.T0;
-            Graph2.DepositPheromone(edge, deposit);
+            Graph2.DepositPheromone(edge2, deposit);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         public void GlobalUpdate()
         {
             double deltaR = 1 / GlobalBestAnt.Distance;
-            foreach (Edge edge in GlobalBestAnt.Path)
+            foreach (Edge2 edge in GlobalBestAnt.Path)
             {
                 double evaporate = (1 - Parameters.GlobalEvaporationRate);
                 Graph2.EvaporatePheromone(edge, evaporate);

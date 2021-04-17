@@ -19,7 +19,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                 public double Distance { get; set; }
                 public List<Point> VisitedNodes { get; set; }
                 public List<Point> UnvisitedNodes { get; set; }
-                public List<Edge> Path { get; set; }
+                public List<Edge2> Path { get; set; }
 
                 
                 public AntSystem(Graph2 graph, int beta, double q0)
@@ -29,7 +29,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                     Q0 = q0;
                     VisitedNodes = new List<Point>();
                     UnvisitedNodes = new List<Point>();
-                    Path = new List<Edge>();
+                    Path = new List<Edge2>();
                 }
                 
                 public void Init(int startNodeId)
@@ -51,7 +51,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                     return VisitedNodes.Count != Path.Count;
                 }
                 
-                public Edge Move()
+                public Edge2 Move()
                 {
                     Point endPoint;
                     var startPoint = CurrentNode();
@@ -75,8 +75,8 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                 
                 private Point ChooseNextPoint()
                 {
-                    List<Edge> edgesWithWeight = new List<Edge>();
-                    Edge bestEdge = new Edge();
+                    List<Edge2> edgesWithWeight = new List<Edge2>();
+                    Edge2 bestEdge2 = new Edge2();
                     int currentNodeId = CurrentNode().Id;
                 
                     foreach (var node in UnvisitedNodes)
@@ -84,9 +84,9 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                         var edge = Graph2.GetEdge(currentNodeId, node.Id);
                         edge.Weight = Weight(edge);
                 
-                        if (edge.Weight > bestEdge.Weight)
+                        if (edge.Weight > bestEdge2.Weight)
                         {
-                            bestEdge = edge;
+                            bestEdge2 = edge;
                         }
                 
                         edgesWithWeight.Add(edge);
@@ -95,7 +95,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                     var random = RandomGenerator.Instance.Random.NextDouble();
                     if (random < Q0)
                     {
-                        return Exploitation(bestEdge);
+                        return Exploitation(bestEdge2);
                     }
                     else
                     {
@@ -103,18 +103,18 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                     }
                 }
                 
-                private double Weight(Edge edge)
+                private double Weight(Edge2 edge2)
                 {
-                    double heuristic = 1 / edge.Length;
-                    return edge.Pheromone * Helper.Pow(heuristic, Beta);
+                    double heuristic = 1 / edge2.Length;
+                    return edge2.Pheromone * Helper.Pow(heuristic, Beta);
                 }
                 
-                private Point Exploitation(Edge bestEdge)
+                private Point Exploitation(Edge2 bestEdge2)
                 {
-                    return bestEdge.End;
+                    return bestEdge2.End;
                 }
                 
-                private Point Exploration(List<Edge> edgesWithWeight)
+                private Point Exploration(List<Edge2> edgesWithWeight)
                 {
                     double totalSum = edgesWithWeight.Sum(x => x.Weight);
                     var edgeProbabilities = edgesWithWeight.Select(w => { w.Weight = (w.Weight / totalSum); return w; }).ToList();

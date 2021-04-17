@@ -35,8 +35,8 @@ namespace ArtificialIntelligenceMethodsProject.IO
         }
         private static Problem Parse(string filepath)
         {
-            /// PROBLEM PARSING ///
-            string[] lines = System.IO.File.ReadAllLines(filepath + ".vrp");
+            // PROBLEM PARSING 
+            string[] lines = File.ReadAllLines(filepath + ".vrp");
             int index = 0;
             string name = lines[index].Substring(lines[index].LastIndexOf(' ')).Trim();
             int vehiclesCount = int.Parse(name.Substring(name.LastIndexOf('k') + 1));
@@ -55,9 +55,24 @@ namespace ArtificialIntelligenceMethodsProject.IO
             {
                 graph.AddVertice(GetVertice(lines[index + i], lines[demandIndex + i]));
             }
-            /// SOLUTION PARSING ///
+
+            // for (int i = 0; i < nodesCount; i++)
+            // {
+            //     for (int j = 0; j < nodesCount; j++)
+            //     {
+            //         if (j == i)
+            //         {
+            //             continue;
+            //         }
+            //         
+            //         graph.AddEdge(new Edge(Math.Min(graph.Vertices[i].Number, graph.Vertices[j].Number)));
+            //         
+            //     }
+            // }
+
+            // SOLUTION PARSING
             List<int[]> routes = new List<int[]>();
-            lines = System.IO.File.ReadAllLines(filepath + ".sol");
+            lines = File.ReadAllLines(filepath + ".sol");
             int j = 0;
             while(lines[j].Contains("Route"))
             {
@@ -81,5 +96,7 @@ namespace ArtificialIntelligenceMethodsProject.IO
             int demand = int.Parse(verticeDemand.Substring(verticeDemand.IndexOf(' ')));
             return new Vertice(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), demand);
         }
+        
+        // private static Edge GetEdge()
     }
 }

@@ -1,22 +1,16 @@
-using System;
-
 namespace ArtificialIntelligenceMethodsProject.Models
 {
     public class Edge
     {
-        public Point Start { get; set; }
-        public Point End { get; set; }
-        public double Length { get; set; }
-        public double Pheromone { get; set; }
-        public double Weight { get; set; }
+        public Vertice a { get; set; }
+        public Vertice b { get; set; }
+        public double Distance { get; set; }
 
-        public Edge() { }
-
-        public Edge(Point start, Point end)
+        public Edge(Vertice a, Vertice b, double distance)
         {
-            Start = start;
-            End = end;
-            Length = Math.Round(Start.DistanceTo(End));
+            this.a = a;
+            this.b = b;
+            this.Distance = distance;
         }
     }
 }
