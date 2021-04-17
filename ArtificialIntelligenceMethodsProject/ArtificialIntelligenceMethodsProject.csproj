@@ -9,4 +9,16 @@
       <PackageReference Include="CommandDotNet" Version="4.1.8" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Algorithms\Ant\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Algorithms\Ant\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Algorithms\Ant\**" />
+    </ItemGroup>
+
 </Project>
