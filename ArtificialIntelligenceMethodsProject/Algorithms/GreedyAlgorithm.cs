@@ -47,7 +47,10 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                 {
                     (int closestNodeIndex, double closestNodeCost) = FindClosestNodeIndex(notVisited, currentNode, capacity);
                     if (closestNodeIndex == -1)
+                    {
                         break;
+                    }
+                    
                     cost += closestNodeCost;
                     capacity -= notVisited[closestNodeIndex].Demand;
                     route.Add(notVisited[closestNodeIndex].Id);

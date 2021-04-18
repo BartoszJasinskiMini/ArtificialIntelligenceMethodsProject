@@ -7,24 +7,31 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
 {
     public class AntSystem
     {
-                public Graph Graph { get; set; }
-                public double Alpha { get; set; }
-                public int Beta { get; set; }
-                public double Rho { get; set; }
-                public double Omega { get; set; }
-                public double Q0 { get; set; }
-                public int StartNodeId { get; set; }
+        private Graph Graph { get; set; }
+        private double Alpha { get; set; }
+
+        private int Beta { get; set; }
+                // public double Rho { get; set; }
+                // public double Omega { get; set; }
+                private double Ro { get; set; }
+                private int Th { get; set; } //Probably Omega
+                private double Q0 { get; set; }
+                private int StartNodeId { get; set; }
                 public double Distance { get; set; }
-                public List<Vertice> VisitedNodes { get; set; }
-                public List<Vertice> UnvisitedNodes { get; set; }
-                public List<Edge> Path { get; set; }
+                private List<Vertice> VisitedNodes { get; set; }
+                private List<Vertice> UnvisitedNodes { get; set; }
+                public List<Edge> Path { get; private set; }
 
                 
-                public AntSystem(Graph graph, int beta, double q0)
+                public AntSystem(Graph graph, Parameters parameters)
                 {
                     Graph = graph;
-                    Beta = beta;
-                    Q0 = q0;
+                    Alpha = parameters.Alpha;
+                    Beta = parameters.Beta;
+                    Q0 = parameters.Q0;
+                    Ro = parameters.ro;
+                    Th = parameters.th;
+                    
                     VisitedNodes = new List<Vertice>();
                     UnvisitedNodes = new List<Vertice>();
                     Path = new List<Edge>();
@@ -34,12 +41,12 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                 {
                     StartNodeId = startNodeId;
                     Distance = 0;
-                    VisitedNodes.Add(Graph.Vertices.Where(x => x.Id == startNodeId).First());
+                    VisitedNodes.Add(Graph.Vertices.First(x => x.Id == startNodeId));
                     UnvisitedNodes = Graph.Vertices.Where(x => x.Id != startNodeId).ToList();
                     Path.Clear();
                 }
-                
-                public Vertice CurrentNode()
+
+                private Vertice CurrentNode()
                 {
                     return VisitedNodes[VisitedNodes.Count - 1];
                 }
@@ -117,9 +124,9 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                     double totalSum = edgesWithWeight.Sum(x => x.Weight);
                     var edgeProbabilities = edgesWithWeight.Select(w => { w.Weight = (w.Weight / totalSum); return w; }).ToList();
                     var cumSum = Helper.EdgeCumulativeSum(edgeProbabilities);
-                    Vertice choosenPoint = Helper.GetRandomEdge(cumSum);
+                    Vertice chosenPoint = Helper.GetRandomEdge(cumSum);
                 
-                    return choosenPoint;
+                    return chosenPoint;
                 }
         
     }

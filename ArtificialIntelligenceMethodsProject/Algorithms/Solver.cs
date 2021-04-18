@@ -59,7 +59,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
             List<int> randomPoints = RandomGenerator.GenerateRandom(Parameters.AntCount, 1, Graph.Vertices.Count);
             foreach (int random in randomPoints)
             {
-                AntSystem ant = new AntSystem(Graph, Parameters.Beta, Parameters.Q0);
+                AntSystem ant = new AntSystem(Graph, Parameters);
                 ant.Init(random);
                 antColony.Add(ant);
             }
@@ -71,6 +71,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         /// </summary>
         private AntSystem BuildTours(List<AntSystem> antColony)
         {
+            // BUG I'm not sure about this loop maybe we have to delete it (just outer loop, foreach seems ok)
             for (int i = 0; i < Graph.Vertices.Count; i++)
             {
                 foreach (AntSystem ant in antColony)

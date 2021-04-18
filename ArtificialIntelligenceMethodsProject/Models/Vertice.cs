@@ -7,8 +7,8 @@ namespace ArtificialIntelligenceMethodsProject.Models
     public class Vertice
     {
         public int Id { get; }
-        public int X { get; }
-        public int Y { get; }
+        private int X { get; }
+        private int Y { get; }
         public int Demand { get; }
         public Vertice(int id, int x, int y, int demand)
         {

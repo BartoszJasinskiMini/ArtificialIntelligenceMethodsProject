@@ -9,8 +9,10 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         /// Relative importance of distance(default=2)
         /// </summary>
         public int Beta { get; set; }
-        
         public double Sigma { get; set; }
+        public double ro { get; set; }
+        public int th { get; set; }
+
         /// <summary>
         /// Global evaporation rate of pheromone(0..1, default=0.1)
         /// </summary>
@@ -24,7 +26,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         /// <summary>
         /// Probability of choosing best ant path instead of random roulette
         /// </summary>
-        public double Q0 { get; set; }
+        public double Q0 { get; set; } //Probably th
 
         /// <summary>
         /// Initial pheromone level along each Edge
@@ -42,9 +44,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         public int Iterations { get; set; }
 
 
-        private double ro { get; set; }
-        private int th { get; set; }
-        
+
         public Parameters(int Beta, double GlobalEvaporationRate, double LocalEvaporationRate, double T0, double Q0, int AntCount, int Iterations)
         {
             this.Beta = Beta;
