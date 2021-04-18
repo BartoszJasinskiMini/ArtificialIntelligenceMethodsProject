@@ -97,6 +97,5 @@ namespace ArtificialIntelligenceMethodsProject.IO
             return new Vertice(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), demand);
         }
         
-        // private static Edge GetEdge()
     }
 }

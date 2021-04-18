@@ -6,7 +6,7 @@ namespace ArtificialIntelligenceMethodsProject.Misc
 {
     public static class Helper
     {
-        public static IEnumerable<Edge2> EdgeCumulativeSum(IEnumerable<Edge2> sequence)
+        public static IEnumerable<Edge> EdgeCumulativeSum(IEnumerable<Edge> sequence)
         {
             double sum = 0;
             foreach (var item in sequence)
@@ -18,7 +18,7 @@ namespace ArtificialIntelligenceMethodsProject.Misc
             return sequence;
         }
 
-        public static Point GetRandomEdge(IEnumerable<Edge2> cumSum)
+        public static Vertice GetRandomEdge(IEnumerable<Edge> cumSum)
         {
             var random = RandomGenerator.Instance.Random.NextDouble();
             return cumSum.First(j => j.Weight >= random).End;

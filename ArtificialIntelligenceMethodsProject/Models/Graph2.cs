@@ -61,7 +61,8 @@ namespace ArtificialIntelligenceMethodsProject.Models
 
         public void EvaporatePheromone(Edge2 edge2, double value)
         {
-            edge2.Pheromone = Math.Max(MinimumPheromone, edge2.Pheromone * value); // Math.Max is here to prevent Pheromon = 0
+            edge2.Pheromone =
+                Math.Max(MinimumPheromone, edge2.Pheromone * value); // Math.Max is here to prevent Pheromon = 0
 
             if (IsSymetric)
             {

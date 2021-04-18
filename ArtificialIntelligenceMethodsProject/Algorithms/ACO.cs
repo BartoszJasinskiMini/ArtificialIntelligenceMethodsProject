@@ -191,7 +191,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
             int i = 1;
             foreach (var vertice in problem.Graph.Vertices)
             {
-                vertices.Add(vertice.Number);
+                vertices.Add(vertice.Id);
                 i++;
             }
 
@@ -202,16 +202,16 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         private Dictionary<Tuple<int, int>, double> GetEdges()
         {
             Dictionary<Tuple<int, int>, double> edges = new Dictionary<Tuple<int, int>, double>();
-            for (int i = 0; i < problem.NodesCount; i++)
+            for (int i = 0; i < problem.Dimensions; i++)
             {
-                for (int j = i; j < problem.NodesCount; j++)
+                for (int j = i; j < problem.Dimensions; j++)
                 {
                     if (j == i)
                     {
                         continue;
                     }
                     
-                    edges.Add(Tuple.Create(Min(problem.Graph.Vertices[i].Number, problem.Graph.Vertices[j].Number), Max(problem.Graph.Vertices[i].Number, problem.Graph.Vertices[j].Number)), 
+                    edges.Add(Tuple.Create(Min(problem.Graph.Vertices[i].Id, problem.Graph.Vertices[j].Id), Max(problem.Graph.Vertices[i].Id, problem.Graph.Vertices[j].Id)), 
                         Vertice.GetDistance(problem.Graph.Vertices[i], problem.Graph.Vertices[j]));
                 }
             }
@@ -224,7 +224,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
             var demand = new Dictionary<int, int>();
             foreach (var vertice in problem.Graph.Vertices)
             {
-                demand.Add(vertice.Number, vertice.Demand);
+                demand.Add(vertice.Id, vertice.Demand);
             }
 
             return demand;
@@ -233,16 +233,16 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         private Dictionary<Tuple<int, int>, double> GetPheromones()
         {
             Dictionary<Tuple<int, int>, double> pheromones = new Dictionary<Tuple<int, int>, double>();
-            for (int i = 0; i < problem.NodesCount; i++)
+            for (int i = 0; i < problem.Dimensions; i++)
             {
-                for (int j = i; j < problem.NodesCount; j++)
+                for (int j = i; j < problem.Dimensions; j++)
                 {
                     if (j == i)
                     {
                         continue;
                     }
                     
-                    pheromones.Add(Tuple.Create(Min(problem.Graph.Vertices[i].Number, problem.Graph.Vertices[j].Number), Max(problem.Graph.Vertices[i].Number, problem.Graph.Vertices[j].Number)), 
+                    pheromones.Add(Tuple.Create(Min(problem.Graph.Vertices[i].Id, problem.Graph.Vertices[j].Id), Max(problem.Graph.Vertices[i].Id, problem.Graph.Vertices[j].Id)), 
                         1);
                 }
             }

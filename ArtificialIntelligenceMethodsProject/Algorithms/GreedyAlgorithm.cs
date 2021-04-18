@@ -33,10 +33,11 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
             routes = new List<int[]>();
             cost = 0;
             List<Vertice> notVisited = new List<Vertice>();
-            for (int i = 1; i < problem.NodesCount; i++)
+            for (int i = 1; i < problem.Dimensions; i++)
             {
                 notVisited.Add(problem.Graph.Vertices[i]);
             }
+            
             while (notVisited.Count > 0)
             {
                 List<int> route = new List<int>();
@@ -49,7 +50,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                         break;
                     cost += closestNodeCost;
                     capacity -= notVisited[closestNodeIndex].Demand;
-                    route.Add(notVisited[closestNodeIndex].Number);
+                    route.Add(notVisited[closestNodeIndex].Id);
                     currentNode = notVisited[closestNodeIndex];
                     notVisited.RemoveAt(closestNodeIndex);
                 }

@@ -5,21 +5,23 @@ using System.Linq;
 using ArtificialIntelligenceMethodsProject.Misc;
 using ArtificialIntelligenceMethodsProject.Models;
 
+using static System.Math;
+
 namespace ArtificialIntelligenceMethodsProject.Algorithms
 {
     public class Solver
     {
-        public Parameters Parameters { get; set; }
+        private Parameters Parameters { get; set; }
         private AntSystem GlobalBestAnt { get; set; }
         private List<double> Results { get; set; }
-        private Graph2 Graph2 { get; set; }
+        private Graph Graph { get; set; }
         private Stopwatch Stopwatch { get; set; }
 
-        public Solver(Parameters parameters, Graph2 graph)
+        public Solver(Parameters parameters, Graph graph)
         {
             Parameters = parameters;
             graph.MinimumPheromone = parameters.T0;
-            Graph2 = graph;
+            Graph = graph;
             Results = new List<double>();
             Stopwatch = new Stopwatch();
         }
@@ -27,17 +29,17 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         /// <summary>
         /// Main loop of ACS algorithm
         /// </summary>
-        public List<double> RunACS()
+        public List<double> RunAcs()
         {
             Stopwatch.Start();
-            Graph2.ResetPheromone(Parameters.T0);
+            Graph.ResetPheromone(Parameters.T0);
             for (int i = 0; i < Parameters.Iterations; i++)
             {
                 List<AntSystem> antColony = CreateAnts();
-                GlobalBestAnt ??= antColony[0];
+                GlobalBestAnt = GlobalBestAnt ?? antColony[0];
 
                 AntSystem localBestAnt = BuildTours(antColony);
-                if (Math.Round(localBestAnt.Distance, 2) < Math.Round(GlobalBestAnt.Distance, 2))
+                if (Round(localBestAnt.Distance, 2) < Round(GlobalBestAnt.Distance, 2))
                 {
                     GlobalBestAnt = localBestAnt;
                     Console.WriteLine("Current Global Best: " + GlobalBestAnt.Distance + " found in " + i + " iteration");
@@ -49,15 +51,15 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         }
 
         /// <summary>
-        /// Create ants and place every ant in random point on graph (warning AntCount < Dimensions)
+        /// Create ants and place every ant in random point on graph (warning AntCount < Dimensions />)
         /// </summary>
-        public List<AntSystem> CreateAnts()
+        private List<AntSystem> CreateAnts()
         {
             List<AntSystem> antColony = new List<AntSystem>();
-            List<int> randomPoints = RandomGenerator.GenerateRandom(Parameters.AntCount, 1, Graph2.Points.Count);
+            List<int> randomPoints = RandomGenerator.GenerateRandom(Parameters.AntCount, 1, Graph.Vertices.Count);
             foreach (int random in randomPoints)
             {
-                AntSystem ant = new AntSystem(Graph2, Parameters.Beta, Parameters.Q0);
+                AntSystem ant = new AntSystem(Graph, Parameters.Beta, Parameters.Q0);
                 ant.Init(random);
                 antColony.Add(ant);
             }
@@ -67,14 +69,14 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         /// <summary>
         /// This method builds solution for every ant in AntColony and return the best ant (with shortest distance tour)
         /// </summary>
-        public AntSystem BuildTours(List<AntSystem> antColony)
+        private AntSystem BuildTours(List<AntSystem> antColony)
         {
-            for (int i = 0; i < Graph2.Dimensions; i++)
+            for (int i = 0; i < Graph.Vertices.Count; i++)
             {
                 foreach (AntSystem ant in antColony)
                 {
-                    Edge2 edge2 = ant.Move();
-                    LocalUpdate(edge2);
+                    Edge edge = ant.Move();
+                    LocalUpdate(edge);
                 }
             }
 
@@ -86,28 +88,28 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         /// <summary>
         /// Update pheromone level on edge passed in parameter
         /// </summary>
-        public void LocalUpdate(Edge2 edge2)
+        private void LocalUpdate(Edge edge)
         {
             double evaporate = (1 - Parameters.LocalEvaporationRate);
-            Graph2.EvaporatePheromone(edge2, evaporate);
+            Graph.EvaporatePheromone(edge, evaporate);
 
             double deposit = Parameters.LocalEvaporationRate * Parameters.T0;
-            Graph2.DepositPheromone(edge2, deposit);
+            Graph.DepositPheromone(edge, deposit);
         }
 
         /// <summary>
         /// Update pheromone level on path for best ant
         /// </summary>
-        public void GlobalUpdate()
+        private void GlobalUpdate()
         {
             double deltaR = 1 / GlobalBestAnt.Distance;
-            foreach (Edge2 edge in GlobalBestAnt.Path)
+            foreach (Edge edge in GlobalBestAnt.Path)
             {
                 double evaporate = (1 - Parameters.GlobalEvaporationRate);
-                Graph2.EvaporatePheromone(edge, evaporate);
+                Graph.EvaporatePheromone(edge, evaporate);
 
                 double deposit = Parameters.GlobalEvaporationRate * deltaR;
-                Graph2.DepositPheromone(edge, deposit);
+                Graph.DepositPheromone(edge, deposit);
             }
         }
 
