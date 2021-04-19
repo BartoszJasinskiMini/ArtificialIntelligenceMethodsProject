@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using ArtificialIntelligenceMethodsProject.Algorithms;
+using ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem;
 using ArtificialIntelligenceMethodsProject.CLI;
 using ArtificialIntelligenceMethodsProject.IO;
 using ArtificialIntelligenceMethodsProject.Models;
@@ -14,11 +15,17 @@ namespace ArtificialIntelligenceMethodsProject
         static int Main(string[] args)
         {
             Problem problem = Reader.ReadProblem(DataSet.M, "A-n32-k5");
-            ACO greedyAlgorithm = new ACO();
-            greedyAlgorithm.LoadProblemInstance(problem);
-            greedyAlgorithm.Solve();
+
+
+            MinMaxAntSystem minMaxAntSystem = new MinMaxAntSystem();
+            minMaxAntSystem.LoadProblemInstance(problem);
+            minMaxAntSystem.Solve();
+
+            /*            ACO greedyAlgorithm = new ACO();
+                        greedyAlgorithm.LoadProblemInstance(problem);
+                        greedyAlgorithm.Solve();*/
             // Solution solution = greedyAlgorithm.GetSolution();
-            
+
             return 0;
             // return new AppRunner<Cli>().Run(args);
         }

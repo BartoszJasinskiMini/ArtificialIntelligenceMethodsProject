@@ -9,32 +9,43 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
     class Edges
     {
         private Dictionary<int, MinMaxEdge> edges;
-
-        public void AddEdge(Vertice u, Vertice v, MinMaxEdge edge)
+        public Edges()
         {
-            if(u.Id > v.Id)
+            edges = new Dictionary<int, MinMaxEdge>();
+        }
+        public void AddEdge(int u, int v, MinMaxEdge edge)
+        {
+            if(u > v)
             {
-                Vertice tmp = v;
+                int tmp = v;
                 v = u;
                 u = tmp;
             }
-            int hashCode = Helper.HashFunction(u.Id, v.Id);
+            int hashCode = Helper.HashFunction(u, v);
             if(edges.ContainsKey(hashCode) == false)
             {
                 edges.Add(hashCode, edge);
             }
         }
 
-        public MinMaxEdge GetEdge(Vertice v, Vertice u)
+        public MinMaxEdge GetEdge(int u, int v)
         {
-            if (u.Id > v.Id)
+            if (u > v)
             {
-                Vertice tmp = v;
+                int tmp = v;
                 v = u;
                 u = tmp;
             }
-            int hashCode = Helper.HashFunction(u.Id, v.Id);
+            int hashCode = Helper.HashFunction(u, v);
             return edges.GetValueOrDefault(hashCode);
+        }
+
+        public void EvaporatePheromone(double percentile)
+        {
+            foreach(var element in edges)
+            {
+                element.Value.EvaporatePheromone(percentile);
+            }
         }
     }
 }

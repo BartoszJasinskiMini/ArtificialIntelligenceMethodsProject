@@ -16,6 +16,7 @@
             Comment = comment;
             Type = type;
             Dimensions = dimensions;
+            VehiclesCount = vehiclesCount;
             Capacity = capacity;
             Graph = graph;
             Solution = solution;

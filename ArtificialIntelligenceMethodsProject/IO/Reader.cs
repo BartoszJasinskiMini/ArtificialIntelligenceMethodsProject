@@ -94,7 +94,7 @@ namespace ArtificialIntelligenceMethodsProject.IO
         {
             string[] tokens = verticePosition.Split(' ');
             int demand = int.Parse(verticeDemand.Substring(verticeDemand.IndexOf(' ')));
-            return new Vertice(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), demand);
+            return new Vertice(int.Parse(tokens[1]) - 1, int.Parse(tokens[2]), int.Parse(tokens[3]), demand);
         }
         
     }

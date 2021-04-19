@@ -9,15 +9,25 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
         private double pheromone;
         public double MaxPheromone { private get; set; }
         public double MinPheromone { private set; get; }
+        public MinMaxEdge(double pheromone, double maxPheromone = double.MaxValue, double minPheromone = 0)
+        {
+            this.pheromone = pheromone;
+            MaxPheromone = maxPheromone;
+            MinPheromone = minPheromone;
+        }
         public double GetPheromone()
         {
             pheromone = pheromone > MaxPheromone ? MaxPheromone : pheromone;
             pheromone = pheromone < MinPheromone ? MinPheromone : pheromone;
             return pheromone;
         }
-        public void UpdatePhremone(double newValue)
+        public void AddPheromone(double addedPheromone)
         {
-            pheromone = newValue;
+            pheromone += addedPheromone;
+        }
+        public void EvaporatePheromone(double percentile)
+        {
+            pheromone = pheromone * (1 - percentile);
         }
     }
 }

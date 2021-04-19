@@ -14,7 +14,7 @@ namespace ArtificialIntelligenceMethodsProject.Models
         public int DepotIndex { get; }
         public Graph(int depotIndex, bool isSymmetric = true)
         {
-            DepotIndex = depotIndex;
+            DepotIndex = depotIndex - 1;
             Vertices = new List<Vertice>();
             IsSymmetric = isSymmetric;
             CreateEdges();

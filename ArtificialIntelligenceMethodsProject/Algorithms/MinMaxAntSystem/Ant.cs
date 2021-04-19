@@ -11,31 +11,38 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
         double alpha = 0.5;
         double beta = 0.5;
 
-        private Problem problem;
-        private Edges edges;
-        private double cost;
-        private List<int[]> routes;
+        public static Problem problem { private get; set; }
+        public static Edges edges { private get; set; }
 
-        public Ant(Problem problem, Edges edges)
+        public double Cost { get; private set; }
+        public List<int[]> Routes { get; private set; }
+        private int startingNode;
+        private List<int> pheromoneTrait;
+
+        public Ant(int startingNode)
         {
-            this.problem = problem;
-            this.edges = edges;
-            routes = null;
-            cost = double.MaxValue;
+            Routes = null;
+            this.startingNode = startingNode;
+            pheromoneTrait = new List<int>();
         }
         public void FindRoute()
         {
+            Routes = new List<int[]>();
+            pheromoneTrait.Add(problem.Graph.DepotIndex);
             List<Vertice> notVisited = new List<Vertice>();
             for (int i = 1; i < problem.Dimensions; i++)
             {
                 notVisited.Add(problem.Graph.Vertices[i]);
             }
-            
+            Vertice currentNode = problem.Graph.Vertices[startingNode];
+            pheromoneTrait.Add(startingNode);
+            List<int> route = new List<int>();
+            route.Add(startingNode);
+            int capacity = problem.Capacity - problem.Graph.Vertices[startingNode].Demand;
+            Cost = Vertice.GetDistance(problem.Graph.Vertices[startingNode], problem.Graph.Vertices[problem.Graph.DepotIndex]);
+            notVisited.RemoveAt(startingNode - 1);
             while (notVisited.Count > 0)
-            {
-                Vertice currentNode = problem.Graph.Vertices[problem.Graph.DepotIndex];
-                List<int> route = new List<int>();
-                int capacity = problem.Capacity;
+            {          
                 while (capacity > 0 && notVisited.Count > 0)
                 {
                     int nextNodeIndex = GetNextVertice(notVisited, currentNode, capacity);
@@ -43,14 +50,19 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
                     {
                         break;
                     }
-                    cost += Vertice.GetDistance(currentNode, notVisited[nextNodeIndex]);
+                    Cost += Vertice.GetDistance(currentNode, notVisited[nextNodeIndex]);
                     capacity -= notVisited[nextNodeIndex].Demand;
                     route.Add(notVisited[nextNodeIndex].Id);
+                    pheromoneTrait.Add(notVisited[nextNodeIndex].Id);
                     currentNode = notVisited[nextNodeIndex];
                     notVisited.RemoveAt(nextNodeIndex);
                 }
-                cost += Vertice.GetDistance(currentNode, problem.Graph.Vertices[problem.Graph.DepotIndex]);
-                routes.Add(route.ToArray());
+                Cost += Vertice.GetDistance(currentNode, problem.Graph.Vertices[problem.Graph.DepotIndex]);
+                Routes.Add(route.ToArray());
+                pheromoneTrait.Add(problem.Graph.DepotIndex);
+                currentNode = problem.Graph.Vertices[problem.Graph.DepotIndex];
+                route = new List<int>();
+                capacity = problem.Capacity;
             }
         }
         private int GetNextVertice(List<Vertice> notVisited, Vertice currentNode, int capacity)
@@ -61,7 +73,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
             {
                 if (notVisited[i].Demand < capacity)
                 {
-                    double val = edges.GetEdge(currentNode, notVisited[i]).GetPheromone() / Vertice.GetDistance(currentNode, notVisited[i]);
+                    double val = edges.GetEdge(currentNode.Id, notVisited[i].Id).GetPheromone() / Vertice.GetDistance(currentNode, notVisited[i]);
                     probability.Add((i, val));
                     sum += val;
                 }
@@ -77,10 +89,16 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
             return -1;
 
         }
-
+        public void EvaporatePheromone(double percentile)
+        {
+            edges.EvaporatePheromone(percentile);
+        }
         public void UpdatePheromone()
         {
-
+            for(int i = 0; i < pheromoneTrait.Count - 1; i++)
+            {
+                edges.GetEdge(pheromoneTrait[i], pheromoneTrait[i + 1]).AddPheromone(1 / Cost);
+            }
         }
     }
 }
