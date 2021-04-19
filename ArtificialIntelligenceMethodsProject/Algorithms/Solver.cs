@@ -16,12 +16,15 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         private List<double> Results { get; set; }
         private Graph Graph { get; set; }
         private Stopwatch Stopwatch { get; set; }
-
-        public Solver(Parameters parameters, Graph graph)
+        private Problem Problem { get; set; }
+        
+        public Solver(Parameters parameters, Graph graph, Problem problem)
         {
             Parameters = parameters;
             graph.MinimumPheromone = parameters.T0;
             Graph = graph;
+            Problem = problem;
+            
             Results = new List<double>();
             Stopwatch = new Stopwatch();
         }
@@ -59,7 +62,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
             List<int> randomPoints = RandomGenerator.GenerateRandom(Parameters.AntCount, 1, Graph.Vertices.Count);
             foreach (int random in randomPoints)
             {
-                AntSystem ant = new AntSystem(Graph, Parameters);
+                AntSystem ant = new AntSystem(Graph, Parameters, Problem);
                 ant.Init(random);
                 antColony.Add(ant);
             }

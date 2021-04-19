@@ -21,9 +21,10 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                 private List<Vertice> VisitedNodes { get; set; }
                 private List<Vertice> UnvisitedNodes { get; set; }
                 public List<Edge> Path { get; private set; }
-
                 
-                public AntSystem(Graph graph, Parameters parameters)
+                private int Capacity { get; set; }
+                
+                public AntSystem(Graph graph, Parameters parameters, Problem problem)
                 {
                     Graph = graph;
                     Alpha = parameters.Alpha;
@@ -31,6 +32,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                     Q0 = parameters.Q0;
                     Ro = parameters.ro;
                     Th = parameters.th;
+                    Capacity = problem.Capacity;
                     
                     VisitedNodes = new List<Vertice>();
                     UnvisitedNodes = new List<Vertice>();
@@ -60,7 +62,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                 {
                     Vertice endPoint;
                     var startPoint = CurrentNode();
-                
+                    var currentCapacity = Capacity - startPoint.Demand;
                     if (UnvisitedNodes.Count == 0)
                     {
                         endPoint = VisitedNodes[0]; // if ant visited every node, just go back to start
@@ -75,6 +77,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                     var edge = Graph.GetEdge(startPoint.Id, endPoint.Id);
                     Path.Add(edge);
                     Distance += edge.Length;
+                    
                     return edge;
                 }
                 
