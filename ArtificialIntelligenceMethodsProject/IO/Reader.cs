@@ -55,6 +55,7 @@ namespace ArtificialIntelligenceMethodsProject.IO
             {
                 graph.AddVertice(GetVertice(lines[index + i], lines[demandIndex + i]));
             }
+            graph.CreateEdges();
 
             // for (int i = 0; i < nodesCount; i++)
             // {

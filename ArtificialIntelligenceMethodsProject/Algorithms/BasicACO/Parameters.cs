@@ -1,6 +1,6 @@
 using System;
 
-namespace ArtificialIntelligenceMethodsProject.Algorithms
+namespace ArtificialIntelligenceMethodsProject.Algorithms.BasicACO
 {
     public class Parameters
     {

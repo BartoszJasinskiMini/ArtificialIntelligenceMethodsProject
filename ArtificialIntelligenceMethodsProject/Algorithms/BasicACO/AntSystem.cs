@@ -43,7 +43,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.BasicACO
                 {
                     StartNodeId = startNodeId;
                     Distance = 0;
-                    VisitedNodes.Add(Graph.Vertices.First(x => x.Id == startNodeId));
+                    VisitedNodes.Add(Graph.Vertices.First(x => x.Id == (startNodeId - 1)));
                     UnvisitedNodes = Graph.Vertices.Where(x => x.Id != startNodeId).ToList();
                     Path.Clear();
                 }
@@ -89,6 +89,10 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.BasicACO
                 
                     foreach (var node in UnvisitedNodes)
                     {
+                        if (currentNodeId == node.Id)
+                        {
+                            continue;
+                        }
                         var edge = Graph.GetEdge(currentNodeId, node.Id);
                         edge.Weight = Weight(edge);
                 

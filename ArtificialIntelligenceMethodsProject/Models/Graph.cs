@@ -17,7 +17,8 @@ namespace ArtificialIntelligenceMethodsProject.Models
             DepotIndex = depotIndex - 1;
             Vertices = new List<Vertice>();
             IsSymmetric = isSymmetric;
-            CreateEdges();
+            Edges = new Dictionary<int, Edge>();
+            // CreateEdges();
         }
         public void AddVertice(Vertice vertice)
         {
@@ -33,7 +34,7 @@ namespace ArtificialIntelligenceMethodsProject.Models
         /// Create edges between all points. 
         /// NOTE: For every two points there is two edges between them in case of asymetric problem (1 -> 2, 2 -> 1).
         /// </summary>
-        private void CreateEdges()
+        public void CreateEdges()
         {
             for (int i = 0; i < Vertices.Count; i++)
             {
@@ -53,7 +54,7 @@ namespace ArtificialIntelligenceMethodsProject.Models
         /// </summary>
         public Edge GetEdge(int firstPointId, int secondPointId)
         {
-            return Edges[Helper.HashFunction(firstPointId, secondPointId)];
+            return Edges.GetValueOrDefault(Helper.HashFunction(firstPointId, secondPointId));
         }
 
         /// <summary>
