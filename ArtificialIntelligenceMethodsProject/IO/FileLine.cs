@@ -25,8 +25,11 @@ namespace ArtificialIntelligenceMethodsProject.IO
             string result = problem.Name + " ; ";
             result += problem.Solution.Cost.ToString() + " ; ";
             result += (testNumber + 1).ToString() + " ; ";
-            result += solution.Cost.ToString() + " ; ";
+            result += (solution != null ? solution.Cost.ToString() : "-") + " ; ";
             result += executionTime.Minutes.ToString() + ':' + executionTime.Seconds.ToString() + ':' + executionTime.Milliseconds.ToString() + " ; ";
+            result += (solution != null ? solution.MaxIterations.ToString() : "-" )+ " ; ";
+            result += (solution != null ? solution.ResultIteration.ToString() : "-") + " ; ";
+            result += (solution != null ? solution.ConvergentIteration.ToString() : "-") + " ; ";
             return result;
         }
     }

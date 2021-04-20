@@ -15,11 +15,11 @@ namespace ArtificialIntelligenceMethodsProject
         static int Main(string[] args)
         {
             //Problem problem = Reader.ReadProblem(DataSet.D, "M-n101-k10");
-            MinMaxParameters parameters = new MinMaxParameters(1, 2, 15, 100, 0.95, 0.05, 0.2, 1.0);
-            AutomatedCalculation.RunMinMaxAlgorithm(20, 1000.0, parameters, DataSet.M, OutputOptions.File, "minMaxM.txt");
-            AutomatedCalculation.RunGreedyAlgorithm(1000.0, DataSet.M, OutputOptions.File, "test.txt");
-            /*AutomatedCalculation.RunGreedyAlgorithm(1000.0, DataSet.S);
-            AutomatedCalculation.RunGreedyAlgorithm(1000.0, DataSet.D);*/
+            MinMaxParameters parameters = new MinMaxParameters(1, 2, 15, 5000, 0.95, 0.05, 0.2, 1.0);
+            //AutomatedCalculation.RunMinMaxAlgorithm(5, 1000.0, parameters, DataSet.M, OutputOptions.File, "minMaxM.txt");
+            AutomatedCalculation.RunMinMaxAlgorithm(5, 1000.0, parameters, DataSet.S, OutputOptions.File, "minMaxS.txt");
+            AutomatedCalculation.RunMinMaxAlgorithm(5, 1000.0, parameters, DataSet.D, OutputOptions.File, "minMaxD.txt");
+
 
 
             /*            ACO greedyAlgorithm = new ACO();

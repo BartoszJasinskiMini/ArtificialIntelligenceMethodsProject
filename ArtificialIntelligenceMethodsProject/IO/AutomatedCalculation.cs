@@ -19,12 +19,12 @@ namespace ArtificialIntelligenceMethodsProject.IO
             List<string> problems = ReadSet(set);
             foreach (string problem in problems)
             {
-                Console.WriteLine(set + " " + problem);
-                MinMaxAntSystem minMaxAntSystem = new MinMaxAntSystem(parameters, maxVehicleDistance);
+                Console.WriteLine(set + " " + problem);   
                 Problem problemInstance = Reader.ReadProblem(set, problem);
-                minMaxAntSystem.LoadProblemInstance(problemInstance);
                 for (int i = 0; i < iterations; i++)
                 {
+                    MinMaxAntSystem minMaxAntSystem = new MinMaxAntSystem(parameters, maxVehicleDistance);
+                    minMaxAntSystem.LoadProblemInstance(problemInstance);
                     Console.WriteLine("Iteration " + i.ToString());
                     TimeSpan executionTime = minMaxAntSystem.Solve();
                     Solution sol = minMaxAntSystem.GetSolution();

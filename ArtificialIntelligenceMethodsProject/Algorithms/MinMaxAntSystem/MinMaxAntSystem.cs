@@ -13,6 +13,8 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
         private List<int[]> routes;
         private MinMaxParameters parameters;
         private double maxVehicleDistance;
+        private int solutionIteration;
+        private List<(int iteration, double cost)> results;
         public MinMaxAntSystem(MinMaxParameters parameters, double maxVehicleDistance)
         {
             this.parameters = parameters;
@@ -20,7 +22,19 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
         }
         public Solution GetSolution()
         {
-            return new Solution((int)cost, routes);
+            Solution solution = new Solution((int)cost, routes);  
+            for(int i = 0; i < results.Count; i++)
+            {
+                double percentile = (results[i].cost - cost) / cost;
+                if (percentile < 0.05)
+                {
+                    solution.ConvergentIteration = results[i].iteration;
+                    break;
+                }
+            }
+            solution.MaxIterations = parameters.MaxIterations;
+            solution.ResultIteration = solutionIteration;
+            return solution;
         }
 
         public void LoadProblemInstance(Problem problem)
@@ -33,6 +47,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
         public TimeSpan Solve()
         {     
             Stopwatch stopwatch = new Stopwatch();
+            results = new List<(int iteration, double cost)>();
             stopwatch.Start();
             Ant.edges = CreateEdges(problem);
             Ant.problem = problem;
@@ -50,6 +65,8 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
                 if(bestAnt.Cost < cost)
                 {
                     cost = bestAnt.Cost;
+                    solutionIteration = i;
+                    results.Add((i, cost));
                     routes = bestAnt.Routes;
                     SetPheromoneBounds();
                 }
