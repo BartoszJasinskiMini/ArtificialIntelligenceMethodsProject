@@ -18,14 +18,14 @@ namespace ArtificialIntelligenceMethodsProject
         static int Main(string[] args)
         {
             //Problem problem = Reader.ReadProblem(DataSet.D, "M-n101-k10");
-            MinMaxParameters parameters = new MinMaxParameters(1, 2, 15, 5000, 0.95, 0.05, 0.2, 1.0);
+            ACOParameters parameters = new ACOParameters(1, 2, 15, 5000, 0.95, 0.05, 0.2, 1.0);
             // AutomatedCalculation.RunMinMaxAlgorithm(5, 1000.0, parameters, DataSet.M, OutputOptions.File, "minMaxM.txt");
             // AutomatedCalculation.RunMinMaxAlgorithm(5, 1000.0, parameters, DataSet.S, OutputOptions.File, "minMaxS.txt");
             // AutomatedCalculation.RunMinMaxAlgorithm(5, 1000.0, parameters, DataSet.D, OutputOptions.File, "minMaxD.txt");
             
             Parameters parameters2 = new Parameters();
             var problem = Reader.ReadProblem(DataSet.M, "A-n32-k5");
-            MinMaxAntSystem mmas = new MinMaxAntSystem(parameters, 1000.0);
+            ACOAntSystem mmas = new ACOAntSystem(parameters, 1000.0);
             mmas.LoadProblemInstance(problem);
             var executionTime = mmas.Solve();
             var sol = mmas.GetSolution();

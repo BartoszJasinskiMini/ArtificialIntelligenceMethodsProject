@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
 {
-    public class MinMaxParameters
+    public class ACOParameters
     {
         public int Alpha { get; }
         public int Beta { get; }
@@ -15,7 +15,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
         public double StartMinPheromone { get; }
         public double StartMaxPheromone { get; }
 
-        public MinMaxParameters(int alpha, int beta, int populationSize, int maxIterations, double rho, double pBest, double startMinPheromone, double startMaxPheromone)
+        public ACOParameters(int alpha, int beta, int populationSize, int maxIterations, double rho, double pBest, double startMinPheromone, double startMaxPheromone)
         {
             Alpha = alpha;
             Beta = beta;

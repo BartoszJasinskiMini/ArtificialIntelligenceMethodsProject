@@ -4,12 +4,12 @@ using System.Text;
 
 namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
 {
-    class MinMaxEdge
+    class ACOEdge
     {
         private double pheromone;
         // public static double MaxPheromone { private get; set; }
         public static double MinPheromone { private get; set; }
-        public MinMaxEdge(double pheromone)
+        public ACOEdge(double pheromone)
         {
             this.pheromone = pheromone;
         }

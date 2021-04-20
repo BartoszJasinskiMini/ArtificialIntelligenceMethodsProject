@@ -6,16 +6,16 @@ using System.Diagnostics;
 
 namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
 {
-    public class MinMaxAntSystem : IAlgorithm
+    public class ACOAntSystem : IAlgorithm
     {
         private Problem problem;
         private double cost;
         private List<int[]> routes;
-        private MinMaxParameters parameters;
+        private ACOParameters parameters;
         private double maxVehicleDistance;
         private int solutionIteration;
         private List<(int iteration, double cost)> results;
-        public MinMaxAntSystem(MinMaxParameters parameters, double maxVehicleDistance)
+        public ACOAntSystem(ACOParameters parameters, double maxVehicleDistance)
         {
             this.parameters = parameters;
             this.maxVehicleDistance = maxVehicleDistance;
@@ -71,21 +71,12 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
                     solutionIteration = i;
                     results.Add((i, cost));
                     routes = bestAnt.Routes;
-                    // SetPheromoneBounds();
                 }
             }
             stopwatch.Stop();
             return stopwatch.Elapsed;
         }
-       
-        // private void SetPheromoneBounds()
-        // {
-        //     double maxValue = 1 / (1 - parameters.Rho) / (cost);
-        //     int nG = problem.Graph.Vertices.Count;
-        //     MinMaxEdge.MaxPheromone = maxValue;
-        //     MinMaxEdge.MinPheromone = (maxValue * (1 - Math.Sqrt(parameters.PBest) * nG) ) / (((nG/2) - 1) * (Math.Sqrt(parameters.PBest) * nG) );
-        // }
-        //
+        
         private List<Ant> CreatePopulation()
         {
             List<Ant> population = new List<Ant>();
@@ -107,7 +98,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
             {
                 for(int j = i; j < problem.Graph.Vertices.Count; j++)
                 {
-                    edges.AddEdge(i, j, new MinMaxEdge(parameters.StartMaxPheromone));
+                    edges.AddEdge(i, j, new ACOEdge(parameters.StartMaxPheromone));
                 }
             }
             

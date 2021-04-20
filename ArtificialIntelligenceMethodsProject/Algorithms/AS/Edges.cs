@@ -8,12 +8,12 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
 {
     class Edges
     {
-        private Dictionary<int, MinMaxEdge> edges;
+        private Dictionary<int, ACOEdge> edges;
         public Edges()
         {
-            edges = new Dictionary<int, MinMaxEdge>();
+            edges = new Dictionary<int, ACOEdge>();
         }
-        public void AddEdge(int u, int v, MinMaxEdge edge)
+        public void AddEdge(int u, int v, ACOEdge edge)
         {
             if(u > v)
             {
@@ -28,7 +28,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
             }
         }
 
-        public MinMaxEdge GetEdge(int u, int v)
+        public ACOEdge GetEdge(int u, int v)
         {
             if (u > v)
             {

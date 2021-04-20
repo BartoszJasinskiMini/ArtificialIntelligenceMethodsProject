@@ -7,7 +7,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
 {
     class Ant
     {
-        public static MinMaxParameters parameters { private get; set; }
+        public static ACOParameters parameters { private get; set; }
         public static Problem problem { private get; set; }
         public static Edges edges { private get; set; }
 
