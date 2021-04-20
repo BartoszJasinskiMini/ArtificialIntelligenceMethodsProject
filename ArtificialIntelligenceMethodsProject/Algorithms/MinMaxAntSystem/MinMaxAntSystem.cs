@@ -11,15 +11,12 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
         private Problem problem;
         private double cost;
         private List<int[]> routes;
-
-
-        private int populationSize = 10;
-        private int maxIterations = 10000;
-        private double pheromone = 1.0;
-        private double pheromoneEvaporationPercentile = 0.7;
-        public MinMaxAntSystem()
+        private MinMaxParameters parameters;
+        private double maxVehicleDistance;
+        public MinMaxAntSystem(MinMaxParameters parameters, double maxVehicleDistance)
         {
-
+            this.parameters = parameters;
+            this.maxVehicleDistance = maxVehicleDistance;
         }
         public Solution GetSolution()
         {
@@ -39,7 +36,8 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
             stopwatch.Start();
             Ant.edges = CreateEdges(problem);
             Ant.problem = problem;
-            for (int i = 0; i < maxIterations; i++)
+            Ant.parameters = parameters;
+            for (int i = 0; i < parameters.MaxIterations; i++)
             {
                 List<Ant> population = CreatePopulation();
                 for(int j = 0; j < population.Count; j++)
@@ -47,21 +45,29 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
                     population[j].FindRoute();
                 }
                 Ant bestAnt = FindBestSolution(population);
-                bestAnt.EvaporatePheromone(pheromoneEvaporationPercentile);
+                bestAnt.EvaporatePheromone(parameters.Rho);
                 bestAnt.UpdatePheromone();
                 if(bestAnt.Cost < cost)
                 {
                     cost = bestAnt.Cost;
                     routes = bestAnt.Routes;
+                    SetPheromoneBounds();
                 }
             }
             stopwatch.Stop();
             return stopwatch.Elapsed;
         }
+        private void SetPheromoneBounds()
+        {
+            double maxValue = 1 / (1 - parameters.Rho) / (cost);
+            int nG = problem.Graph.Vertices.Count;
+            MinMaxEdge.MaxPheromone = maxValue;
+            MinMaxEdge.MinPheromone = (maxValue * (1 - Math.Sqrt(parameters.PBest) * nG) ) / (((nG/2) - 1) * (Math.Sqrt(parameters.PBest) * nG) );
+        }
         private List<Ant> CreatePopulation()
         {
             List<Ant> population = new List<Ant>();
-            List<int> startVertices = RandomGenerator.GenerateRandom(populationSize, 1, problem.Graph.Vertices.Count - 1);
+            List<int> startVertices = RandomGenerator.GenerateRandom(parameters.PopulationSize, 1, problem.Graph.Vertices.Count - 1);
             foreach (int vertice in startVertices)
             {
                 Ant ant = new Ant(vertice);
@@ -72,13 +78,16 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
         private Edges CreateEdges(Problem problem)
         {
             Edges edges = new Edges();
+            MinMaxEdge.MaxPheromone = parameters.StartMaxPheromone;
+            MinMaxEdge.MinPheromone = parameters.StartMinPheromone;
             for(int i = 0; i < problem.Graph.Vertices.Count; i++)
             {
                 for(int j = i; j < problem.Graph.Vertices.Count; j++)
                 {
-                    edges.AddEdge(i, j, new MinMaxEdge(pheromone, 1.0));
+                    edges.AddEdge(i, j, new MinMaxEdge(parameters.StartMaxPheromone));
                 }
             }
+            
             return edges;
         }
         private Ant FindBestSolution(List<Ant> population)

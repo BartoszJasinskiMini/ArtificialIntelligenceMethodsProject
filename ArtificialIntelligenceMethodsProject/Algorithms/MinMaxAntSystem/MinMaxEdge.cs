@@ -7,13 +7,11 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
     class MinMaxEdge
     {
         private double pheromone;
-        public double MaxPheromone { private get; set; }
-        public double MinPheromone { private set; get; }
-        public MinMaxEdge(double pheromone, double maxPheromone = double.MaxValue, double minPheromone = 0)
+        public static double MaxPheromone { private get; set; }
+        public static double MinPheromone { private get; set; }
+        public MinMaxEdge(double pheromone)
         {
             this.pheromone = pheromone;
-            MaxPheromone = maxPheromone;
-            MinPheromone = minPheromone;
         }
         public double GetPheromone()
         {

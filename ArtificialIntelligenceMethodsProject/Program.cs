@@ -14,14 +14,16 @@ namespace ArtificialIntelligenceMethodsProject
     {
         static int Main(string[] args)
         {
-            Problem problem = Reader.ReadProblem(DataSet.M, "A-n32-k5");
+            Problem problem = Reader.ReadProblem(DataSet.M, "A-n38-k5");
 
             /*            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm(1000.0);
                         greedyAlgorithm.LoadProblemInstance(problem);
                         greedyAlgorithm.Solve();
                         Solution sol = greedyAlgorithm.GetSolution();*/
 
-            MinMaxAntSystem minMaxAntSystem = new MinMaxAntSystem();
+            MinMaxParameters parameters = new MinMaxParameters(1, 2, 10, 50000, 0.98, 0.05, 0.1, 1.0);
+
+            MinMaxAntSystem minMaxAntSystem = new MinMaxAntSystem(parameters, 1000.0);
             minMaxAntSystem.LoadProblemInstance(problem);
             minMaxAntSystem.Solve();
             Solution sol = minMaxAntSystem.GetSolution();

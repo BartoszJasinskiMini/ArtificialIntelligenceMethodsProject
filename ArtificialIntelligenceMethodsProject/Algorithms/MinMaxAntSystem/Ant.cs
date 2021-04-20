@@ -8,9 +8,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
 {
     class Ant
     {
-        double alpha = 0.5;
-        double beta = 0.5;
-
+        public static MinMaxParameters parameters { private get; set; }
         public static Problem problem { private get; set; }
         public static Edges edges { private get; set; }
 
@@ -76,7 +74,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
             {
                 if (notVisited[i].Demand < capacity)
                 {
-                    double val = Math.Pow(edges.GetEdge(currentNode.Id, notVisited[i].Id).GetPheromone(), alpha) / Math.Pow(Vertice.GetDistance(currentNode, notVisited[i]), beta);
+                    double val = Math.Pow(edges.GetEdge(currentNode.Id, notVisited[i].Id).GetPheromone(), parameters.Alpha) / Math.Pow(Vertice.GetDistance(currentNode, notVisited[i]), parameters.Beta);
                     probability.Add((i, val));
                     sum += val;
                 }
