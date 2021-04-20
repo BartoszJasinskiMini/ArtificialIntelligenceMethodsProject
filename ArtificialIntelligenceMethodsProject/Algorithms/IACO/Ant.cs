@@ -70,28 +70,28 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.IACO
             
             Mutate(iterationNumber);
 
-            if (show)
-            {
-                Console.WriteLine("%%%%%%%%%%%%%");
-
-                foreach (var route2 in Routes)
-                {
-                    foreach (var customer in route2)
-                    {
-                        Console.Write(customer + " ");
-                    }
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    
-                }
-                Console.WriteLine("%%%%%%%%%%%%%");
-                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
-            }
+            // if (show)
+            // {
+            //     Console.WriteLine("%%%%%%%%%%%%%");
+            //
+            //     foreach (var route2 in Routes)
+            //     {
+            //         foreach (var customer in route2)
+            //         {
+            //             Console.Write(customer + " ");
+            //         }
+            //         Console.WriteLine();
+            //         Console.WriteLine();
+            //         Console.WriteLine();
+            //         
+            //     }
+            //     Console.WriteLine("%%%%%%%%%%%%%");
+            //     Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            //
+            // }
         }
 
-        private bool show = false;
+        // private bool show = false;
         private void Mutate(int iterationNumber)
         {
             
@@ -126,43 +126,43 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.IACO
                     routesToMutate[2 * i + 1]))
                 {
                     var tempFirstCustomerToMutate = routesToMutate[2 * i][firstCustomerIndexToMutate];
-                    foreach (var customer in routesToMutate[2 * i])
-                    {
-                        Console.Write(customer + " ");
-                    }
-                    Console.WriteLine();
-
-                    Console.WriteLine(tempFirstCustomerToMutate);
-                    Console.WriteLine("!!!!!");
-                    Console.WriteLine(tempFirstCustomerToMutate);
-                    
-                    foreach (var customer in routesToMutate[2 * i + 1])
-                    {
-                        Console.Write(customer + " ");
-                    }
-                    Console.WriteLine("???????");
+                    // foreach (var customer in routesToMutate[2 * i])
+                    // {
+                    //     Console.Write(customer + " ");
+                    // }
+                    // Console.WriteLine();
+                    //
+                    // Console.WriteLine(tempFirstCustomerToMutate);
+                    // Console.WriteLine("!!!!!");
+                    // Console.WriteLine(tempFirstCustomerToMutate);
+                    //
+                    // foreach (var customer in routesToMutate[2 * i + 1])
+                    // {
+                    //     Console.Write(customer + " ");
+                    // }
+                    // Console.WriteLine("???????");
                     
                     routesToMutate[2 * i][firstCustomerIndexToMutate] =
                         routesToMutate[2 * i + 1][secondCustomerIndexToMutate];
                     routesToMutate[2 * i + 1][secondCustomerIndexToMutate] = tempFirstCustomerToMutate;
                     
-                    foreach (var customer in routesToMutate[2 * i])
-                    {
-                        Console.Write(customer + " ");
-                    }
-
-                    Console.WriteLine("#####");
-
-                    foreach (var customer in routesToMutate[2 * i + 1])
-                    {
-                        Console.Write(customer + " ");
-                    }
-                    
+                    // foreach (var customer in routesToMutate[2 * i])
+                    // {
+                    //     Console.Write(customer + " ");
+                    // }
+                    //
+                    // Console.WriteLine("#####");
+                    //
+                    // foreach (var customer in routesToMutate[2 * i + 1])
+                    // {
+                    //     Console.Write(customer + " ");
+                    // }
+                    //
                     // Console.WriteLine("MUTATEED");
                     var firstRoutes = routesToMutate[2 * i];
                     var secondRoutes = routesToMutate[2 * i + 1];
-                    TwoOpt(ref firstRoutes);
-                    TwoOpt(ref secondRoutes);
+                    routesToMutate[2 * i] = TwoOpt(ref firstRoutes);
+                    routesToMutate[2 * i + 1] = TwoOpt(ref secondRoutes);
                 }
 
             }
@@ -175,9 +175,9 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.IACO
         private bool ShouldMutate(int firstCustomerIndexToMutate, int[] firstRouteToMutate,
             int secondCustomerIndexToMutate, int[] secondRouteToMutate)
         {
-            var firstRouteCost = GetRouteCost(firstRouteToMutate);
-            var secondRouteCost = GetRouteCost(secondRouteToMutate);
-            double firstRouteCostAfterMutation = 0.0, secondRouteCostAfterMutation = 0.0;
+            // var firstRouteCost = GetRouteCost(firstRouteToMutate);
+            // var secondRouteCost = GetRouteCost(secondRouteToMutate);
+            // double firstRouteCostAfterMutation = 0.0, secondRouteCostAfterMutation = 0.0;
             
             for (var i = 0; i < firstRouteToMutate.Length; i++)
             {
@@ -237,7 +237,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.IACO
                 true; //firstRouteCostAfterMutation + secondRouteCostAfterMutation > firstRouteCost + secondRouteCost;
         }
 
-        private void TwoOpt(ref int[] route)
+        private int[] TwoOpt(ref int[] route)
         {
             var bestCost = GetRouteCost(route);
             for (var i = 1; i < route.Length - 1; i++)
@@ -248,22 +248,24 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.IACO
                     var newRouteCost = GetRouteCost(newRoute);
                     if (bestCost > GetRouteCost(newRoute))
                     {
-                        show = true;
-                        Console.WriteLine("TWO OPT IMPROVED!!!");
-                        foreach (var customer in route)
-                        {
-                            Console.Write(customer + " ");
-                        }
+                        // show = true;
+                        // Console.WriteLine("TWO OPT IMPROVED!!!");
+                        // foreach (var customer in route)
+                        // {
+                            // Console.Write(customer + " ");
+                        // }
                         route = newRoute;
                         bestCost = newRouteCost;
-                        Console.WriteLine("@@@@@@@");
-                        foreach (var customer in route)
-                        {
-                            Console.Write(customer + " ");
-                        }
+                        // Console.WriteLine("@@@@@@@");
+                        // foreach (var customer in route)
+                        // {
+                            // Console.Write(customer + " ");
+                        // }
                     }
                 }
             }
+
+            return route;
         }
 
         private int[] TwoOptSwap(ref int[] route, int i, int k)
