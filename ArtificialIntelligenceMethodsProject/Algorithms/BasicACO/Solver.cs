@@ -4,12 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using ArtificialIntelligenceMethodsProject.Misc;
 using ArtificialIntelligenceMethodsProject.Models;
-
 using static System.Math;
 
-namespace ArtificialIntelligenceMethodsProject.Algorithms
+namespace ArtificialIntelligenceMethodsProject.Algorithms.BasicACO
 {
-    public class Solver
+    public class Solver: IAlgorithm
     {
         private Parameters Parameters { get; set; }
         private AntSystem GlobalBestAnt { get; set; }
@@ -17,6 +16,10 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         private Graph Graph { get; set; }
         private Stopwatch Stopwatch { get; set; }
         private Problem Problem { get; set; }
+        
+        
+        private double cost;
+        private List<int[]> routes;
         
         public Solver(Parameters parameters, Graph graph, Problem problem)
         {
@@ -120,6 +123,24 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         public TimeSpan GetExecutionTime()
         {
             return Stopwatch.Elapsed;
+        }
+
+        public void LoadProblemInstance(Problem problem)
+        {
+            Problem = problem;
+            routes = null;
+            cost = double.MaxValue;
+        }
+
+        public TimeSpan Solve()
+        {
+            RunAcs();
+            return GetExecutionTime();
+        }
+
+        public Solution GetSolution()
+        {
+            return new Solution((int)cost, routes);
         }
     }
 }

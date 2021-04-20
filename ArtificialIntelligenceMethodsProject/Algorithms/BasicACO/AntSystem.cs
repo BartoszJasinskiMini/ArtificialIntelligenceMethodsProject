@@ -3,7 +3,7 @@ using System.Linq;
 using ArtificialIntelligenceMethodsProject.Misc;
 using ArtificialIntelligenceMethodsProject.Models;
 
-namespace ArtificialIntelligenceMethodsProject.Algorithms
+namespace ArtificialIntelligenceMethodsProject.Algorithms.BasicACO
 {
     public class AntSystem
     {
