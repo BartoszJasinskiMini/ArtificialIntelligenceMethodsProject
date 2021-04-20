@@ -11,25 +11,26 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
         private Problem problem;
         private double cost;
         private List<int[]> routes;
-        private Solution solution;
 
-        private int populationSize = 10;
-        private int maxIterations = 100;
+
+        private int populationSize = 100;
+        private int maxIterations = 10000;
         private double pheromone = 1.0;
-        private double pheromoneEvaporationPercentile = 0.05;
+        private double pheromoneEvaporationPercentile = 0.7;
         public MinMaxAntSystem()
         {
 
         }
         public Solution GetSolution()
         {
-            throw new NotImplementedException();
+            return new Solution((int)cost, routes);
         }
 
         public void LoadProblemInstance(Problem problem)
         {
             this.problem = problem;
             routes = null;
+            cost = double.MaxValue;
         }
 
         public TimeSpan Solve()
@@ -48,15 +49,11 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
                 Ant bestAnt = FindBestSolution(population);
                 bestAnt.EvaporatePheromone(pheromoneEvaporationPercentile);
                 bestAnt.UpdatePheromone();
-                if(solution == null)
+                if(bestAnt.Cost < cost)
                 {
-                    solution = new Solution((int)bestAnt.Cost, bestAnt.Routes);
+                    cost = bestAnt.Cost;
+                    routes = bestAnt.Routes;
                 }
-                else if(solution.Cost < bestAnt.Cost)
-                {
-
-                }
-                Console.WriteLine("Population number " + i);
             }
             stopwatch.Stop();
             return stopwatch.Elapsed;
@@ -79,7 +76,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
             {
                 for(int j = i; j < problem.Graph.Vertices.Count; j++)
                 {
-                    edges.AddEdge(i, j, new MinMaxEdge(pheromone));
+                    edges.AddEdge(i, j, new MinMaxEdge(pheromone, 1.0));
                 }
             }
             return edges;

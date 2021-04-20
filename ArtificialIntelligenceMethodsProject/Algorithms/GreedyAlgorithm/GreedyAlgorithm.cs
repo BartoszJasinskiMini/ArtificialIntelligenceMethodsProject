@@ -10,9 +10,10 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
         private Problem problem;
         private double cost;
         private List<int[]> routes;
-        public GreedyAlgorithm()
+        private double maxVehicleDistance;
+        public GreedyAlgorithm(double maxVehicleDistance)
         {
-
+            this.maxVehicleDistance = maxVehicleDistance;
         }
         public Solution GetSolution()
         {
@@ -72,10 +73,13 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                 if (node[i].Demand <= capacityLeft)
                 {
                     double currentValue = Vertice.GetDistance(node[i], from);
-                    if (currentValue < closestValue)
+                    if (maxVehicleDistance <= cost + currentValue + Vertice.GetDistance(node[i], problem.Graph.Vertices[problem.Graph.DepotIndex]))
                     {
-                        closestIndex = i;
-                        closestValue = currentValue;
+                        if (currentValue < closestValue)
+                        {
+                            closestIndex = i;
+                            closestValue = currentValue;
+                        }
                     }
                 }
             }
