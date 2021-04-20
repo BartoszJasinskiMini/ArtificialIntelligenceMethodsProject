@@ -23,7 +23,6 @@ namespace ArtificialIntelligenceMethodsProject
             // AutomatedCalculation.RunMinMaxAlgorithm(5, 1000.0, parameters, DataSet.S, OutputOptions.File, "minMaxS.txt");
             // AutomatedCalculation.RunMinMaxAlgorithm(5, 1000.0, parameters, DataSet.D, OutputOptions.File, "minMaxD.txt");
             
-            Parameters parameters2 = new Parameters();
             var problem = Reader.ReadProblem(DataSet.M, "A-n32-k5");
             ACOAntSystem mmas = new ACOAntSystem(parameters, 1000.0);
             mmas.LoadProblemInstance(problem);
