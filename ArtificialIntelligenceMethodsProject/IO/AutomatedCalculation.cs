@@ -1,4 +1,5 @@
 ﻿using ArtificialIntelligenceMethodsProject.Algorithms;
+using ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem;
 using ArtificialIntelligenceMethodsProject.Models;
 using System;
 using System.Collections.Generic;
@@ -7,22 +8,84 @@ using System.Text;
 
 namespace ArtificialIntelligenceMethodsProject.IO
 {
+    enum OutputOptions
+    {
+        Console, File
+    }
     class AutomatedCalculation
     {
-        public static void RunGreedyAlgorithm(double maxVehicleDistance, DataSet set)
+        public static void RunMinMaxAlgorithm(int iterations, double maxVehicleDistance, MinMaxParameters parameters, DataSet set, OutputOptions options = OutputOptions.Console, string outPutFileName = null)
         {
             List<string> problems = ReadSet(set);
-            foreach(string problem in problems)
+            foreach (string problem in problems)
+            {
+                Console.WriteLine(set + " " + problem);
+                MinMaxAntSystem minMaxAntSystem = new MinMaxAntSystem(parameters, maxVehicleDistance);
+                Problem problemInstance = Reader.ReadProblem(set, problem);
+                minMaxAntSystem.LoadProblemInstance(problemInstance);
+                for (int i = 0; i < iterations; i++)
+                {
+                    Console.WriteLine("Iteration " + i.ToString());
+                    TimeSpan executionTime = minMaxAntSystem.Solve();
+                    Solution sol = minMaxAntSystem.GetSolution();
+                    string result;
+                    switch (options)
+                    {
+                        case OutputOptions.Console:
+                            result = sol != null ? sol.Cost.ToString() : "no solution found";
+                            Console.WriteLine(problemInstance.Name + " Perfect Solution: " + problemInstance.Solution.Cost + " GreedyAlgorithm cost: " + result);
+                            break;
+                        case OutputOptions.File:
+                            using (StreamWriter sw = File.AppendText(outPutFileName))
+                            {
+                                string line = new FileLine(problemInstance, sol, executionTime, i).ToString();
+                                sw.WriteLine(line);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+        }
+        public static void RunGreedyAlgorithm(double maxVehicleDistance, DataSet set, OutputOptions options = OutputOptions.Console, string outPutFileName = null)
+        {
+            List<string> problems = ReadSet(set);
+            List<FileLine> lines = new List<FileLine>();
+            foreach (string problem in problems)
             {
                 Console.WriteLine(set + " " + problem);
                 GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm(maxVehicleDistance);
                 Problem problemInstance = Reader.ReadProblem(set, problem);
                 greedyAlgorithm.LoadProblemInstance(problemInstance);
-                greedyAlgorithm.Solve();
+                TimeSpan executionTime = greedyAlgorithm.Solve();
                 Solution sol = greedyAlgorithm.GetSolution();
-
-                string result = sol != null ? sol.Cost.ToString() : "no solution found";
-                Console.WriteLine(problemInstance.Name + " Perfect Solution: " + problemInstance.Solution.Cost + " GreedyAlgorithm cost: " + result);
+                string result;
+                switch (options)
+                {
+                    case OutputOptions.Console:
+                        result = sol != null ? sol.Cost.ToString() : "no solution found";
+                        Console.WriteLine(problemInstance.Name + " Perfect Solution: " + problemInstance.Solution.Cost + " GreedyAlgorithm cost: " + result);
+                        break;
+                    case OutputOptions.File:
+                        lines.Add(new FileLine(problemInstance, sol, executionTime, 1));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if(options == OutputOptions.File)
+                WriteToFile(lines, outPutFileName);
+        }
+        private static void WriteToFile(List<FileLine> lines, string fileName)
+        {
+            using (StreamWriter writer = new StreamWriter(fileName))
+            {
+                for(int i = 0; i < lines.Count; i++)
+                {
+                    writer.WriteLine(lines[i].ToString());
+                }
             }
         }
         public static List<string> ReadSet(DataSet dataset)

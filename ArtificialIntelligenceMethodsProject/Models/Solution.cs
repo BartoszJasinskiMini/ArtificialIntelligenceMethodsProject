@@ -4,6 +4,9 @@ namespace ArtificialIntelligenceMethodsProject.Models
 {
     public class Solution
     {
+        public int MaxIterations { get; set; }
+        public int ResultIteration { get; set; }
+        public int ConvergentIteration { get; set; }
         public List<int[]> Routes { get; }
         public int Cost { get; }
         public Solution(int cost, List<int[]> routes)
