@@ -19,8 +19,7 @@ namespace ArtificialIntelligenceMethodsTests
             greedyAlgorithm.LoadProblemInstance(problem);
             greedyAlgorithm.Solve();
             Solution solution = greedyAlgorithm.GetSolution();
-
-
+            Assert.IsNotNull(solution);
         }
     }
 }
