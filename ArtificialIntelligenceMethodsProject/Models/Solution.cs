@@ -26,20 +26,5 @@ namespace ArtificialIntelligenceMethodsProject.Models
             }
             return (int)result;
         }
-        public int Calculator2(Graph graph)
-        {
-            double result = 0;
-            for (int i = 0; i < Routes.Count; i++)
-            {
-                int index = (Routes[i])[0] - 1;
-                result += Vertice.GetDistance(new Vertice(0, 1, -1, 0), graph.Vertices[index]);
-                for (int j = 0; j < Routes[i].Length - 1; j++)
-                {
-                    result += Vertice.GetDistance(graph.Vertices[(Routes[i])[j] - 1], graph.Vertices[(Routes[i])[j + 1] - 1]);
-                }
-                result += Vertice.GetDistance(new Vertice(0, 1, -1, 0), graph.Vertices[(Routes[i])[Routes[i].Length - 1] - 1]);
-            }
-            return (int)result;
-        }
     }
 }

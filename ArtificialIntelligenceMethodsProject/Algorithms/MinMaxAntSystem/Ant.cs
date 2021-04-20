@@ -27,16 +27,19 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
         }
         public void FindRoute()
         {
-            Routes = new List<int[]>();
-            pheromoneTrait.Add(problem.Graph.DepotIndex);
+            Routes = new List<int[]>(); 
             List<Vertice> notVisited = new List<Vertice>();
             for (int i = 1; i < problem.Dimensions; i++)
             {
                 notVisited.Add(problem.Graph.Vertices[i]);
             }
+
+            pheromoneTrait.Add(problem.Graph.DepotIndex);
+
+            List<int> route = new List<int>();
             Vertice currentNode = problem.Graph.Vertices[startingNode];
             pheromoneTrait.Add(startingNode);
-            List<int> route = new List<int>();
+    
             route.Add(startingNode);
             int capacity = problem.Capacity - problem.Graph.Vertices[startingNode].Demand;
             Cost = Vertice.GetDistance(problem.Graph.Vertices[startingNode], problem.Graph.Vertices[problem.Graph.DepotIndex]);
@@ -73,7 +76,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
             {
                 if (notVisited[i].Demand < capacity)
                 {
-                    double val = edges.GetEdge(currentNode.Id, notVisited[i].Id).GetPheromone() / Vertice.GetDistance(currentNode, notVisited[i]);
+                    double val = Math.Pow(edges.GetEdge(currentNode.Id, notVisited[i].Id).GetPheromone(), alpha) / Math.Pow(Vertice.GetDistance(currentNode, notVisited[i]), beta);
                     probability.Add((i, val));
                     sum += val;
                 }

@@ -13,7 +13,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
         private List<int[]> routes;
 
 
-        private int populationSize = 100;
+        private int populationSize = 10;
         private int maxIterations = 10000;
         private double pheromone = 1.0;
         private double pheromoneEvaporationPercentile = 0.7;
@@ -86,7 +86,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
             int bestIndex = 0;
             for(int i = 0; i < population.Count; i++)
             {
-                if (population[bestIndex].Cost < population[i].Cost)
+                if (population[bestIndex].Cost > population[i].Cost)
                     bestIndex = i;
             }
             return population[bestIndex];

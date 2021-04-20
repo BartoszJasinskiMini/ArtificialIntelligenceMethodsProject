@@ -27,7 +27,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem
         }
         public void EvaporatePheromone(double percentile)
         {
-            pheromone = pheromone * (1 - percentile);
+            pheromone = pheromone * percentile;
         }
     }
 }
