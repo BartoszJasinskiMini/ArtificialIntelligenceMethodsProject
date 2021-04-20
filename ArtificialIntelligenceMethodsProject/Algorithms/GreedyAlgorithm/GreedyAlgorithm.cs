@@ -73,7 +73,7 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms
                 if (node[i].Demand <= capacityLeft)
                 {
                     double currentValue = Vertice.GetDistance(node[i], from);
-                    if (maxVehicleDistance <= cost + currentValue + Vertice.GetDistance(node[i], problem.Graph.Vertices[problem.Graph.DepotIndex]))
+                    if (maxVehicleDistance >= cost + currentValue + Vertice.GetDistance(node[i], problem.Graph.Vertices[problem.Graph.DepotIndex]))
                     {
                         if (currentValue < closestValue)
                         {

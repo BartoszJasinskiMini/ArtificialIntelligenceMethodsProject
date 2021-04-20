@@ -16,11 +16,16 @@ namespace ArtificialIntelligenceMethodsProject
         {
             Problem problem = Reader.ReadProblem(DataSet.M, "A-n32-k5");
 
+            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm(1000.0);
+            greedyAlgorithm.LoadProblemInstance(problem);
+            greedyAlgorithm.Solve();
+            Solution sol = greedyAlgorithm.GetSolution();
 
-            MinMaxAntSystem minMaxAntSystem = new MinMaxAntSystem();
+/*            MinMaxAntSystem minMaxAntSystem = new MinMaxAntSystem();
             minMaxAntSystem.LoadProblemInstance(problem);
             minMaxAntSystem.Solve();
-            Solution sol = minMaxAntSystem.GetSolution();
+            Solution sol = minMaxAntSystem.GetSolution();*/
+
             int i = 0;
             /*            ACO greedyAlgorithm = new ACO();
                         greedyAlgorithm.LoadProblemInstance(problem);

@@ -9,11 +9,13 @@ namespace ArtificialIntelligenceMethodsTests
     [TestClass]
     public class GreedyAlgorithmTests
     {
+        string filepath = "C:\\Users\\mikol\\Source\\Repos\\BartoszJasinskiMini\\ArtificialIntelligenceMethodsProject\\ArtificialIntelligenceMethodsProject\\Graphs\\M\\A-n32-k5";
+
         [TestMethod]
         public void TestMethod1()
         {
-            Problem problem = Reader.ReadProblem(DataSet.M, "A-n32-k5");
-            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
+            Problem problem = Reader.ReadProblem(filepath);
+            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm(1000.0);
             greedyAlgorithm.LoadProblemInstance(problem);
             greedyAlgorithm.Solve();
             Solution solution = greedyAlgorithm.GetSolution();
