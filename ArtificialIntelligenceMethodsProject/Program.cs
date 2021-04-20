@@ -18,22 +18,28 @@ namespace ArtificialIntelligenceMethodsProject
         static int Main(string[] args)
         {
             //Problem problem = Reader.ReadProblem(DataSet.D, "M-n101-k10");
-            ACOParameters parameters = new ACOParameters(1, 2, 15, 5000, 0.95, 0.05, 0.2, 1.0);
+            //ACOParameters parameters = new ACOParameters(1, 2, 15, 5000, 0.95, 0.05, 0.2, 1.0);
+            //AutomatedCalculation.RunACOlgorithm(5, 1000.0, parameters, DataSet.M, OutputOptions.File, "ACOM.txt");
+            //AutomatedCalculation.RunACOlgorithm(5, 1000.0, parameters, DataSet.S, OutputOptions.File, "ACOS.txt");
+            //AutomatedCalculation.RunACOlgorithm(5, 1000.0, parameters, DataSet.D, OutputOptions.File, "ACOD.txt");
             // AutomatedCalculation.RunMinMaxAlgorithm(5, 1000.0, parameters, DataSet.M, OutputOptions.File, "minMaxM.txt");
             // AutomatedCalculation.RunMinMaxAlgorithm(5, 1000.0, parameters, DataSet.S, OutputOptions.File, "minMaxS.txt");
             // AutomatedCalculation.RunMinMaxAlgorithm(5, 1000.0, parameters, DataSet.D, OutputOptions.File, "minMaxD.txt");
-            
-            var problem = Reader.ReadProblem(DataSet.M, "A-n32-k5");
-            ACOAntSystem mmas = new ACOAntSystem(parameters, 1000.0);
-            mmas.LoadProblemInstance(problem);
-            var executionTime = mmas.Solve();
-            var sol = mmas.GetSolution();
-            var result = sol != null ? sol.Cost.ToString() : "no solution found";
-            Console.WriteLine(" GreedyAlgorithm cost: " + result);
+            AutomatedCalculation.RunGreedyAlgorithm(1000.0, DataSet.M, OutputOptions.File, "greedyM.txt");
+            AutomatedCalculation.RunGreedyAlgorithm(1000.0, DataSet.S, OutputOptions.File, "greedyS.txt");
+            AutomatedCalculation.RunGreedyAlgorithm(1000.0, DataSet.D, OutputOptions.File, "greedyD.txt");
+            /*            var problem = Reader.ReadProblem(DataSet.M, "A-n32-k5");
+                        ACOAntSystem mmas = new ACOAntSystem(parameters, 1000.0);
+                        mmas.LoadProblemInstance(problem);
+                        var executionTime = mmas.Solve();
+                        var sol = mmas.GetSolution();
+                        var result = sol != null ? sol.Cost.ToString() : "no solution found";
+                        Console.WriteLine(" GreedyAlgorithm cost: " + result);*/
+
             // var solver = new Solver(parameters2, problem.Graph, problem);
             // Console.WriteLine("TIME = " + solver.Solve());
-            
-            
+
+
             /*            ACO greedyAlgorithm = new ACO();
                         greedyAlgorithm.LoadProblemInstance(problem);
                         greedyAlgorithm.Solve();*/

@@ -1,4 +1,5 @@
 ﻿using ArtificialIntelligenceMethodsProject.Algorithms;
+using ArtificialIntelligenceMethodsProject.Algorithms.AS;
 using ArtificialIntelligenceMethodsProject.Algorithms.MinMaxAntSystem;
 using ArtificialIntelligenceMethodsProject.Models;
 using System;
@@ -14,6 +15,40 @@ namespace ArtificialIntelligenceMethodsProject.IO
     }
     class AutomatedCalculation
     {
+        public static void RunACOlgorithm(int iterations, double maxVehicleDistance, ACOParameters parameters, DataSet set, OutputOptions options = OutputOptions.Console, string outPutFileName = null)
+        {
+            List<string> problems = ReadSet(set);
+            foreach (string problem in problems)
+            {
+                Console.WriteLine(set + " " + problem);
+                Problem problemInstance = Reader.ReadProblem(set, problem);
+                for (int i = 0; i < iterations; i++)
+                {
+                    ACOAntSystem mmas = new ACOAntSystem(parameters, 1000.0);
+                    mmas.LoadProblemInstance(problemInstance);
+                    Console.WriteLine("Iteration " + i.ToString());
+                    TimeSpan executionTime = mmas.Solve();
+                    Solution sol = mmas.GetSolution();
+                    string result;
+                    switch (options)
+                    {
+                        case OutputOptions.Console:
+                            result = sol != null ? sol.Cost.ToString() : "no solution found";
+                            Console.WriteLine(problemInstance.Name + " Perfect Solution: " + problemInstance.Solution.Cost + " GreedyAlgorithm cost: " + result);
+                            break;
+                        case OutputOptions.File:
+                            using (StreamWriter sw = File.AppendText(outPutFileName))
+                            {
+                                string line = new FileLine(problemInstance, sol, executionTime, i).ToString();
+                                sw.WriteLine(line);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
         public static void RunMinMaxAlgorithm(int iterations, double maxVehicleDistance, MinMaxParameters parameters, DataSet set, OutputOptions options = OutputOptions.Console, string outPutFileName = null)
         {
             List<string> problems = ReadSet(set);
