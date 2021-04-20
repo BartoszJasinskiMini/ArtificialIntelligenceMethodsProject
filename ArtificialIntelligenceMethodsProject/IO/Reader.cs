@@ -92,9 +92,13 @@ namespace ArtificialIntelligenceMethodsProject.IO
         }
         private static Vertice GetVertice(string verticePosition, string verticeDemand)
         {
+            if(verticePosition.StartsWith(" "))
+            {
+                verticePosition = verticePosition.TrimStart();
+            }
             string[] tokens = verticePosition.Split(' ');
             int demand = int.Parse(verticeDemand.Substring(verticeDemand.IndexOf(' ')));
-            return new Vertice(int.Parse(tokens[1]) - 1, int.Parse(tokens[2]), int.Parse(tokens[3]), demand);
+            return new Vertice(int.Parse(tokens[0]) - 1, int.Parse(tokens[1]), int.Parse(tokens[2]), demand);
         }
         
     }
