@@ -21,8 +21,4 @@
       <None Remove="Algorithms\Ant\**" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Algorithms\IACO" />
-    </ItemGroup>
-
 </Project>

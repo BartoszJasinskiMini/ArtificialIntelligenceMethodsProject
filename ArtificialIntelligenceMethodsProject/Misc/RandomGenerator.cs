@@ -16,6 +16,16 @@ namespace ArtificialIntelligenceMethodsProject.Misc
             return Instance.Random.NextDouble() * (maximum - minimum) + minimum;
         }
 
+        public static bool GetTrueWithSpecifiedProbability(double probability)
+        {
+            if (probability < 0 || probability > 1)
+            {
+                Console.WriteLine("GetTrueWithSpecifiedProbability(double probability): PROBABILITY IS OUTSIDE [0, 1] RANGE");
+            }
+
+            return GetDoubleRangeRandomNumber(0, 1) <= probability;
+        }
+
         /// <summary>
         /// Generate List of unique numbers
         /// </summary>
@@ -28,6 +38,12 @@ namespace ArtificialIntelligenceMethodsProject.Misc
         {
             Random r = new Random();
             return list[r.Next(list.Count)];
+        }
+
+        public static int GetRandomIntFromRange(int lowerBoundary, int upperBoundary)
+        {
+            var random = new Random();
+            return random.Next(lowerBoundary, upperBoundary);
         }
         
         public static int GetRandom(List<int> list, List<double> probabilities)
