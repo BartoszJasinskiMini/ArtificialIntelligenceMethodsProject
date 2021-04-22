@@ -57,19 +57,6 @@ namespace ArtificialIntelligenceMethodsProject.IO
             }
             graph.CreateEdges();
 
-            // for (int i = 0; i < nodesCount; i++)
-            // {
-            //     for (int j = 0; j < nodesCount; j++)
-            //     {
-            //         if (j == i)
-            //         {
-            //             continue;
-            //         }
-            //         
-            //         graph.AddEdge(new Edge(Math.Min(graph.Vertices[i].Number, graph.Vertices[j].Number)));
-            //         
-            //     }
-            // }
 
             // SOLUTION PARSING
             List<int[]> routes = new List<int[]>();

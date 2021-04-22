@@ -92,8 +92,6 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
         private Edges CreateEdges(Problem problem)
         {
             Edges edges = new Edges();
-            // MinMaxEdge.MaxPheromone = parameters.StartMaxPheromone;
-            // MinMaxEdge.MinPheromone = parameters.StartMinPheromone;
             for(int i = 0; i < problem.Graph.Vertices.Count; i++)
             {
                 for(int j = i; j < problem.Graph.Vertices.Count; j++)

@@ -7,7 +7,6 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
     class ACOEdge
     {
         private double pheromone;
-        // public static double MaxPheromone { private get; set; }
         public static double MinPheromone { private get; set; }
         public ACOEdge(double pheromone)
         {
@@ -15,7 +14,6 @@ namespace ArtificialIntelligenceMethodsProject.Algorithms.AS
         }
         public double GetPheromone()
         {
-            // pheromone = pheromone > MaxPheromone ? MaxPheromone : pheromone;
             pheromone = pheromone < MinPheromone ? MinPheromone : pheromone;
             return pheromone;
         }
